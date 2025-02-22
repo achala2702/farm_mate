@@ -2,3 +2,4 @@
 /machine_learning/disease_detection/train
 /machine_learning/disease_detection/valid
 /machine_learning/disease_detection/test
+/machine_learning/disease_detection/plant_disease_detection_model.keras
