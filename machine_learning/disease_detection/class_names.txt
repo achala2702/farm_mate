@@ -13,7 +13,10 @@ Grape___Black_rot
 Grape___Esca_(Black_Measles)
 Grape___Leaf_blight_(Isariopsis_Leaf_Spot)
 Grape___healthy
+Orange___Citrus_Canker_Diseases_Leaf
+Orange___Citrus_Nutrient_Deficiency_Yellow_Leaf_Orange
 Orange___Haunglongbing_(Citrus_greening)
+Orange___healthy
 Peach___Bacterial_spot
 Peach___healthy
 Pepper,_bell___Bacterial_spot
