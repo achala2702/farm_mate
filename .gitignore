@@ -1,6 +1,8 @@
 /farm_mate_env
 /machine_learning/disease_detection/train
+/machine_learning/disease_detection/train_no_bg
 /machine_learning/disease_detection/valid
+/machine_learning/disease_detection/valid_no_bg
 /machine_learning/disease_detection/test
 /machine_learning/disease_detection/plant_disease_detection_model.keras
 /machine_learning/disease_detection/old_model/
