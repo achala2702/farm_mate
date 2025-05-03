@@ -1,17 +1,23 @@
-import React from 'react';
+import React from "react";
 
 interface buttonProps {
-    text:string,
-    onClick:()=>void,
-    className?:string
+  text: string;
+  type?: "button" | "submit";
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  className?: string;
 }
 
-const Button: React.FC<buttonProps>=({text, onClick, className})=>{
-    return(
-        <button onClick={onClick} className={`${className}`}>
-            {text}
-        </button>
-    );
-}
+const Button: React.FC<buttonProps> = ({
+  text,
+  type = "button",
+  onClick,
+  className,
+}) => {
+  return (
+    <button type={type} onClick={onClick} className={`${className}`}>
+      {text}
+    </button>
+  );
+};
 
 export default Button;

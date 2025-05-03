@@ -4,6 +4,7 @@ import AuthLayout from "@/layouts/AuthLayout";
 import { AuthImageProvider, useAuthImage } from "@/context/AuthImageContext";
 import { useEffect } from "react";
 import sigin_img from "@/assets/images/signin.jpg";
+import SignupForm from "@/components/signupForm";
 
 const SigninContent = () => {
   const { setImgSrc } = useAuthImage();
@@ -12,7 +13,11 @@ const SigninContent = () => {
     setImgSrc(sigin_img.src);
   }, []);
 
-  return <AuthLayout>HIIII</AuthLayout>;
+  return (
+    <AuthLayout>
+      <SignupForm />
+    </AuthLayout>
+  );
 };
 
 export default function SigninPage() {
