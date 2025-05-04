@@ -4,7 +4,7 @@ import AuthLayout from "@/layouts/AuthLayout";
 import { AuthImageProvider, useAuthImage } from "@/context/AuthImageContext";
 import { useEffect } from "react";
 import sigin_img from "@/assets/images/signin.jpg";
-import SignupForm from "@/components/signupForm";
+import SignupForm from "@/components/auth/SignupForm";
 
 const SigninContent = () => {
   const { setImgSrc } = useAuthImage();

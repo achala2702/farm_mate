@@ -14,7 +14,7 @@ const Button: React.FC<buttonProps> = ({
   className,
 }) => {
   return (
-    <button type={type} onClick={onClick} className={`${className}`}>
+    <button type={type} onClick={onClick} className={`${className} cursor-pointer opacity-100 hover:opacity-80 transition-opacity duration-200`}>
       {text}
     </button>
   );

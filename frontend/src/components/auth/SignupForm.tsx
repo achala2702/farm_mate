@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Button from "./button";
+import Button from "../button";
 import Link from "next/link";
 interface SignupFormProps {}
 
@@ -87,7 +87,7 @@ const SignupForm: React.FC<SignupFormProps> = () => {
         <Button
           text="Create Account"
           onClick={handleSignup}
-          className="bg-primaryGreen w-full text-white rounded-md p-2 cursor-pointer font-semibold"
+          className="bg-primaryGreen w-full text-white rounded-md p-2 font-semibold"
         />
       </form>
 
@@ -101,12 +101,12 @@ const SignupForm: React.FC<SignupFormProps> = () => {
         <Button
           text="Google"
           onClick={handleLoginGoogle}
-          className="flex-grow text-black font-semibold bg-background py-2 px-6 cursor-pointer rounded-md border border-gray-300"
+          className="flex-grow text-black font-semibold bg-[#f8fbe7] py-2 px-6 rounded-md border border-gray-300"
         />
         <Button
           text="Facebook"
           onClick={handleLoginFacebook}
-          className=" flex-grow text-black font-semibold bg-background py-2 px-6 cursor-pointer rounded-md border border-gray-300"
+          className=" flex-grow text-black font-semibold bg-[#f8fbe7] py-2 px-6 rounded-md border border-gray-300"
         />
       </div>
 

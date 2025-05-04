@@ -3,6 +3,9 @@
 :root {
   --background: #f8fbe7;
   --foreground: #171717;
+  --custom-sidebar-hover: #e1e6c3;
+  --primaryGreen: #4d6855;
+  --custom-header-search-background: #7d9c70;
 }
 
 @theme inline {
@@ -11,16 +14,20 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  --color-primaryGreen: #315C3D;
-
+  --color-primaryGreen: var(--primaryGreen);
+  --color-custom-sidebar-hover: var(--custom-sidebar-hover);
+  --color-custom-header-search-background: var(--custom-header-search-background)
 }
 
-/* @media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) {
   :root {
     --background: #1e2c22;
     --foreground: #f8fbe7;
+    --custom-sidebar-hover: #34493a;
+    --primaryGreen: #1a7133;
+    --custom-header-search-background: #4b7831;
   }
-} */
+}
 
 body {
   background: var(--background);
