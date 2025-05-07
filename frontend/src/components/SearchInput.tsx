@@ -8,7 +8,7 @@ interface SearchInputProps {
 
 const SearchInput: React.FC<SearchInputProps>=({className, width})=>{
     return(
-        <div className={`w-${width}`}>
+        <div className={`md:w-${width}`}>
         <input
           type="search"
           placeholder="Search discussions..."

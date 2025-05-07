@@ -15,7 +15,7 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
       <TopBar/>
     <div className="flex min-h-screen">
       <NavBar isOpen={navbarOpen} />
-      <main className="flex-1 mx-14 py-6">{children}</main>
+      <main className="flex-1 flex flex-col gap-6 md:mx-14 py-10 mt-14 xl:ml-80 xl:mr-8">{children}</main>
     </div>
     </div>
   );

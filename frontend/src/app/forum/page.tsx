@@ -1,13 +1,24 @@
 "use client";
 
+import Categories from "@/components/forum/Categories";
 import Header from "@/components/forum/Header";
 import RootLayout from "@/layouts/RootLayout";
 
+const categories_list = [
+  { id:1, name: "Plant Diseases", icon: "", description: "Identify and treat plant diseases effectively", topics_count: 12 },
+  { id:2, name: "Market Trends", icon: "", description: "Analyze market trends and pricing forecasts", topics_count: 12 },
+  { id:3, name: "Weather Updates", icon: "", description: "Weather forecasts and climate discussions", topics_count: 12 },
+  { id:4, name: "Best Practices", icon: "", description: "Farming techniques and best practices", topics_count: 12 },
+  { id:5, name: "Equipment & Tools", icon: "", description: "Discussions about farming equipment and tools", topics_count: 12 },
+  { id:6, name: "Marketplace", icon: "", description: "Buy and sell farming products", topics_count: 12 },
+];
+
 export default function ForumPage() {
-    const handleSearch =()=>{};
-    return(
-        <RootLayout>
-            <Header searchFunction={handleSearch}/>
-        </RootLayout>
-    );
+  const handleSearch = () => {};
+  return (
+    <RootLayout>
+      <Header searchFunction={handleSearch} />
+      <Categories categories={categories_list}/>
+    </RootLayout>
+  );
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import useScreenWidth from "@/hooks/useScreenWidth";
 
 interface NavBarProps {
   isOpen: boolean;
@@ -13,9 +14,15 @@ const navItems = [
 ];
 
 const NavBar: React.FC<NavBarProps> = ({ isOpen }) => {
+  const screenWidth = useScreenWidth();
+
   const pathname = usePathname();
   return (
-    <aside className="h-screen px-4 w-72 border-r-1 py-8 border-gray-400">
+    <aside
+      className={`h-screen bg-background px-4 w-72 xl:mt-14 border-r-1 py-8 border-gray-400 ${
+        isOpen || screenWidth >= 1280 ? "fixed" : "hidden"
+      }`}
+    >
       <p className="font-semibold mx-5">Navigation</p>
       <nav className="flex mt-2 flex-col gap-2">
         {navItems.map((item) => (

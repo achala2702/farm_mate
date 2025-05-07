@@ -6,6 +6,7 @@
   --custom-sidebar-hover: #e1e6c3;
   --primaryGreen: #4d6855;
   --custom-header-search-background: #7d9c70;
+  --custom-card-bg: #eff5c1;
 }
 
 @theme inline {
@@ -16,7 +17,8 @@
 
   --color-primaryGreen: var(--primaryGreen);
   --color-custom-sidebar-hover: var(--custom-sidebar-hover);
-  --color-custom-header-search-background: var(--custom-header-search-background)
+  --color-custom-header-search-background: var(--custom-header-search-background);
+  --color-custom-card-bg: var(--custom-card-bg);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -26,6 +28,7 @@
     --custom-sidebar-hover: #34493a;
     --primaryGreen: #1a7133;
     --custom-header-search-background: #4b7831;
+    --custom-card-bg: #314635;
   }
 }
 
