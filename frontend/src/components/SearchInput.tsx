@@ -2,13 +2,13 @@ import React from "react";
 
 interface SearchInputProps {
     className?: string;
-    width:string;
+    width?: "w-36"| "w-64" |"w-72";
 
 }
 
 const SearchInput: React.FC<SearchInputProps>=({className, width})=>{
     return(
-        <div className={`md:w-${width}`}>
+        <div className={`${width}`}>
         <input
           type="search"
           placeholder="Search discussions..."

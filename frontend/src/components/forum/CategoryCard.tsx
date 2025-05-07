@@ -1,4 +1,5 @@
 import { Category } from "./Categories";
+import { Icon } from "@iconify/react";
 
 export default function CategoryCard({
   name,
@@ -10,7 +11,7 @@ export default function CategoryCard({
     <div className=" flex flex-col justify-between min-h-44 bg-custom-card-bg rounded-2xl p-6">
       <div className="flex gap-4">
         <div className="border-gray-400 border flex items-center justify-center w-14 h-14 shrink-0 rounded-full">
-          icon
+        <Icon icon={icon} width="26" height="26" />
         </div>
         <div className="flex flex-col gap-2">
           <h1 className="font-bold text-2xl">{name}</h1>

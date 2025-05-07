@@ -19,8 +19,12 @@ const NavBar: React.FC<NavBarProps> = ({ isOpen }) => {
   const pathname = usePathname();
   return (
     <aside
-      className={`h-screen bg-background px-4 w-72 xl:mt-14 border-r-1 py-8 border-gray-400 ${
-        isOpen || screenWidth >= 1280 ? "fixed" : "hidden"
+      className={`fixed h-screen bg-background px-4 w-72  pt-20 border-r-1 py-8 border-gray-400 ${
+        screenWidth < 1280
+          ? "transform transition-transform duration-300 ease-in-out"
+          : ""
+      } ${
+        screenWidth >= 1280 || isOpen ? "translate-x-0" : "-translate-x-full"
       }`}
     >
       <p className="font-semibold mx-5">Navigation</p>
