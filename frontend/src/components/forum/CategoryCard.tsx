@@ -1,4 +1,4 @@
-import { Category } from "./Categories";
+import { TCategory } from "./Categories";
 import { Icon } from "@iconify/react";
 
 export default function CategoryCard({
@@ -6,7 +6,7 @@ export default function CategoryCard({
   icon,
   description,
   topics_count,
-}: Category) {
+}: TCategory) {
   return (
     <div className=" flex flex-col justify-between min-h-44 bg-custom-card-bg rounded-2xl p-6">
       <div className="flex gap-4">
@@ -14,7 +14,7 @@ export default function CategoryCard({
         <Icon icon={icon} width="26" height="26" />
         </div>
         <div className="flex flex-col gap-2">
-          <h1 className="font-bold text-2xl">{name}</h1>
+          <h1 className="font-bold text-xl lg:text-2xl">{name}</h1>
           <p>{description}</p>
         </div>
       </div>
