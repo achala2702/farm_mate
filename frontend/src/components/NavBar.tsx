@@ -2,15 +2,16 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import useScreenWidth from "@/hooks/useScreenWidth";
+import { Icon } from "@iconify/react";
 
 interface NavBarProps {
   isOpen: boolean;
 }
 
 const navItems = [
-  { name: "Home", icon: "", href: "/forum" },
-  { name: "Disease Detection", icon: "", href: "/disease-detection" },
-  { name: "Yield Prediction", icon: "", href: "/yield-prediction" },
+  { name: "Home", icon: "lucide:home", href: "/forum" },
+  { name: "Disease Detection", icon: "icon-park-outline:leaves-two", href: "/disease-detection" },
+  { name: "Yield Prediction", icon: "hugeicons:plant-03", href: "/yield-prediction" },
 ];
 
 const NavBar: React.FC<NavBarProps> = ({ isOpen }) => {
@@ -31,12 +32,13 @@ const NavBar: React.FC<NavBarProps> = ({ isOpen }) => {
       <nav className="flex mt-2 flex-col gap-2">
         {navItems.map((item) => (
           <Link
-            className={`block mx-2 p-2 rounded-xl hover:bg-custom-sidebar-hover ${
+            className={`mx-2 p-2 rounded-xl hover:bg-custom-sidebar-hover flex items-center gap-2 ${
               pathname === item.href ? "bg-custom-sidebar-hover" : ""
             }`}
             key={item.name}
             href={item.href}
           >
+            <Icon icon={item.icon} width="20" height="20" />
             {item.name}
           </Link>
         ))}

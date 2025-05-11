@@ -7,6 +7,7 @@
   --primaryGreen: #4d6855;
   --custom-header-search-background: #7d9c70;
   --custom-card-bg: #eff5c1;
+  --custom-foreground-muted: #A3A3A3;
 }
 
 @theme inline {
@@ -19,6 +20,7 @@
   --color-custom-sidebar-hover: var(--custom-sidebar-hover);
   --color-custom-header-search-background: var(--custom-header-search-background);
   --color-custom-card-bg: var(--custom-card-bg);
+  --color-custom-foreground-muted: var(--custom-foreground-muted);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -29,6 +31,7 @@
     --primaryGreen: #1a7133;
     --custom-header-search-background: #4b7831;
     --custom-card-bg: #314635;
+    --custom-foreground-muted: #A3A3A3;
   }
 }
 
