@@ -97,6 +97,7 @@ export default function UploadImageCard({
             />
             <input
               type="file"
+              name="image"
               accept="image/*"
               ref={inputRef}
               onChange={handleUploadImage}
