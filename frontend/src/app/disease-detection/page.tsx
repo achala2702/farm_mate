@@ -4,7 +4,7 @@ import { useState } from "react";
 import RootLayout from "@/layouts/RootLayout";
 import DetectionResults from "@/components/disease_detection/DetectionResults";
 import UploadImageCard from "@/components/disease_detection/UploadImageCard";
-import CropCard from "@/components/disease_detection/CropCard";
+import CropCard from "@/components/CropCard";
 import DiseaseCard from "@/components/disease_detection/DiseaseCard";
 
 import maizeImg from "@/assets/images/maize.jpg";
