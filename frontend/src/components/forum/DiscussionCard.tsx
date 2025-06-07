@@ -3,11 +3,18 @@ import { Icon } from "@iconify/react";
 
 type DiscussionProps = {
   discussion: TDiscussion;
+  onDiscussionClick: () => void;
 };
 
-export default function DiscussionCard({ discussion }: DiscussionProps) {
+export default function DiscussionCard({
+  discussion,
+  onDiscussionClick,
+}: DiscussionProps) {
   return (
-    <div className="bg-custom-card-bg flex gap-4 rounded-2xl p-6">
+    <div
+      onClick={onDiscussionClick}
+      className="bg-custom-card-bg flex gap-4 cursor-pointer rounded-2xl p-6"
+    >
       <div className="flex flex-col items-center">
         <Icon icon="ion:arrow-up-outline" className="w-4 h-4 md:w-5 md:h-5" />
         <p className="text-sm md:text-base">{discussion.votes}</p>

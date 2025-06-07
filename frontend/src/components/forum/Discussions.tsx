@@ -1,4 +1,8 @@
+"use client";
+
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+
 import Button from "../button";
 import DiscussionCard from "./DiscussionCard";
 
@@ -24,6 +28,7 @@ const tabs = ["Trending", "Latest", "Most Popular"];
 
 export default function Discussions({ discussions }: DiscussionsProps) {
   const [activeTab, SetActiveTab] = useState("Trending");
+  const router = useRouter();
 
   const handleViewAllClick = () => {};
 
@@ -51,7 +56,7 @@ export default function Discussions({ discussions }: DiscussionsProps) {
       </div>
       <div className="flex flex-col gap-4 mt-6">
         {discussions.map((discussion) => (
-          <DiscussionCard key={discussion.id} discussion={discussion} />
+          <DiscussionCard key={discussion.id} onDiscussionClick={()=>(router.push(`/posts/${discussion.id}`))} discussion={discussion} />
         ))}
       </div>
     </div>
