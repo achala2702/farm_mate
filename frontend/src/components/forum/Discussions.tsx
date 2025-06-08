@@ -32,6 +32,13 @@ export default function Discussions({ discussions }: DiscussionsProps) {
 
   const handleViewAllClick = () => {};
 
+  //navigate to an individual discussion
+  const handleDiscussionClick = (discussionId: number) => {
+    setTimeout(() => {
+      router.push(`forum/posts/${discussionId}`);
+    }, 200);
+  };
+
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
@@ -56,7 +63,11 @@ export default function Discussions({ discussions }: DiscussionsProps) {
       </div>
       <div className="flex flex-col gap-4 mt-6">
         {discussions.map((discussion) => (
-          <DiscussionCard key={discussion.id} onDiscussionClick={()=>(router.push(`/posts/${discussion.id}`))} discussion={discussion} />
+          <DiscussionCard
+            key={discussion.id}
+            onDiscussionClick={() => handleDiscussionClick(discussion.id)}
+            discussion={discussion}
+          />
         ))}
       </div>
     </div>

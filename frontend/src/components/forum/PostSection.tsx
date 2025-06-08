@@ -51,13 +51,17 @@ export default function PostSection({ post }: PostSectionProps) {
         </div>
         <div className=" flex items-center justify-between">
           <div className=" flex gap-2 items-center justify-center">
-            <img
-              src={post.author.avatar}
-              className="rounded-full w-6 h-6 object-cover"
+            <Icon
+              icon="ion:arrow-up-outline"
+              className="w-5 h-5 md:w-6 md:h-6 hover:text-foreground/60 active:scale-90 transition-all duration-150"
+              onClick={() => console.log("up clicked")}
             />
-            <p className="md:text-sm text-xs">
-              Posted by <strong>{post.author.name}</strong>: {post.timeAgo}
-            </p>
+            <p className="text-sm md:text-lg">{post.votes}</p>
+            <Icon
+              icon="ion:arrow-down-outline"
+              className="w-5 h-5 md:w-6 md:h-6 hover:text-foreground/60 active:scale-90 transition-all duration-150"
+              onClick={() => console.log("down clicked")}
+            />
           </div>
           <Button
             icon="meteor-icons:share"

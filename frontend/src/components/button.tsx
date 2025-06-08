@@ -22,7 +22,7 @@ const Button: React.FC<buttonProps> = ({
     <button
       type={type}
       onClick={onClick}
-      className={`${className} flex items-center justify-center gap-2 md:gap-4 text-sm md:text-base cursor-pointer opacity-100 hover:opacity-80 transition-opacity duration-200`}
+      className={`${className} flex items-center justify-center gap-2 md:gap-4 text-sm md:text-base cursor-pointer active:scale-95 transition-all opacity-100 hover:opacity-80 duration-150`}
     >
       {icon ? <Icon icon={icon} className="w-3 h-3 md:w-4 md:h-4" /> : ""}
       {text}

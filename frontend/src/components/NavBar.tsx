@@ -10,8 +10,16 @@ interface NavBarProps {
 
 const navItems = [
   { name: "Home", icon: "lucide:home", href: "/forum" },
-  { name: "Disease Detection", icon: "icon-park-outline:leaves-two", href: "/disease-detection" },
-  { name: "Yield Prediction", icon: "hugeicons:plant-03", href: "/yield-prediction" },
+  {
+    name: "Disease Detection",
+    icon: "icon-park-outline:leaves-two",
+    href: "/disease-detection",
+  },
+  {
+    name: "Yield Prediction",
+    icon: "hugeicons:plant-03",
+    href: "/yield-prediction",
+  },
 ];
 
 const NavBar: React.FC<NavBarProps> = ({ isOpen }) => {
@@ -32,8 +40,8 @@ const NavBar: React.FC<NavBarProps> = ({ isOpen }) => {
       <nav className="flex mt-2 flex-col gap-2">
         {navItems.map((item) => (
           <Link
-            className={`mx-2 p-2 rounded-xl hover:bg-custom-sidebar-hover flex items-center gap-2 ${
-              pathname === item.href ? "bg-custom-sidebar-hover" : ""
+            className={`mx-2 p-2 rounded-xl active:scale-95 hover:bg-custom-sidebar-hover flex items-center gap-2 transition-transform duration-150 ${
+              pathname.includes(item.href) ? "bg-custom-sidebar-hover" : ""
             }`}
             key={item.name}
             href={item.href}
