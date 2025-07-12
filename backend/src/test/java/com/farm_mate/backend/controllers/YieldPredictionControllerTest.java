@@ -6,6 +6,7 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -29,7 +30,12 @@ class YieldPredictionControllerTest {
     private YieldPredictionController yieldPredictionController;
 
     //dto
-    YieldDto dto = new YieldDto();
+    private YieldDto dto;
+
+    @BeforeEach
+    void setUpDto() {
+        dto = new YieldDto();
+    }
 
     @Test
     void testYieldPredictionOk() {
