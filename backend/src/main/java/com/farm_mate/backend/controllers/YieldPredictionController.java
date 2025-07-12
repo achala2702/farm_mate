@@ -1,7 +1,11 @@
 package com.farm_mate.backend.controllers;
 
+import com.farm_mate.backend.dto.YieldDto;
 import com.farm_mate.backend.services.YieldPredictionService;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,7 +20,8 @@ public class YieldPredictionController {
     }
 
     @PostMapping("/yield-prediction")
-    public String YieldPrediction() {
-        return yieldPredictionService.predictYield();
+    public ResponseEntity<String> YieldPrediction(@Valid @RequestBody YieldDto dto) {
+        String result = yieldPredictionService.predictYield(dto);
+        return ResponseEntity.ok(result);
     }
 }
