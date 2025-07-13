@@ -14,6 +14,8 @@ This project consists of multiple components:
 
 ### Setup
 
+> ⚠️ **Python 3.10 is required** to ensure compatibility with TensorFlow and other dependencies.
+
 1. **Install Python dependencies:**
 
 ```bash
@@ -25,6 +27,8 @@ matplotlib==3.7.2 \
 seaborn==0.13.0 \
 pandas==2.1.0 \
 librosa==0.10.1 \
+flask==3.1.1 \
+onnxruntime==1.22.1 \
 pillow==11.3.0 \
 rembg==2.0.67
 ```
