@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.multipart.MultipartException;
 
@@ -35,10 +36,16 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(buildErrorResponse(HttpStatus.BAD_REQUEST, errors));
     }
 
-    //handling resourceAccessException
+    //handling resourceAccessException when external servers refused to connect
     @ExceptionHandler(ResourceAccessException.class)
     public ResponseEntity<Map<String, Object>> handleResourceAccessException(ResourceAccessException e) {
         return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(buildErrorResponse(HttpStatus.SERVICE_UNAVAILABLE, e.getMessage()));
+    }
+
+    //handling httpClientErrorExceptions when external serves respond as bad request
+    @ExceptionHandler(HttpClientErrorException.class)
+    public ResponseEntity<Map<String, Object>> handleHttpClientErrorException(HttpClientErrorException e) {
+        return ResponseEntity.status(e.getStatusCode()).body(buildErrorResponse(e.getStatusCode(), e.getMessage()));
     }
 
     //handling all other exceptions

@@ -47,6 +47,11 @@ def preprocess_image(image: Image.Image) -> np.ndarray:
 # Function to predict yield for a given input
 def predict_yield(crop, year, season, district, area_hectares):
     """Predicts total production for a given crop, season, district, and area in hectares."""
+    
+    if (
+    crop not in label_encoders['Crop'].classes_ or season not in label_encoders['Season'].classes_ or district not in label_encoders['District'].classes_):
+        raise ValueError("Invalid request parameters")
+    
     crop_encoded = label_encoders['Crop'].transform([crop])[0]
     season_encoded = label_encoders['Season'].transform([season])[0]
     district_encoded = label_encoders['District'].transform([district])[0]
@@ -84,7 +89,7 @@ def disease_detect():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# yeiled preidction route
+# yield prediction route
 @app.route('/yield-prediction', methods=['POST'])
 def yield_predict():
 
@@ -103,6 +108,9 @@ def yield_predict():
         return jsonify({
             "prediction": yield_prediction,
         })
+    
+    except ValueError as ve:
+        return jsonify({"error": str(ve)}), 400
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500

@@ -52,13 +52,13 @@ export default function YeildForm({ onResponse }: YeildFormProps) {
             <option value="" disabled>
               Select a crop
             </option>
-            <option value="maize">Maize</option>
-            <option value="grapes">Grapes</option>
-            <option value="orange">Orange</option>
-            <option value="pepper">Pepper</option>
-            <option value="potato">Potato</option>
-            <option value="strawberry">Strawberry</option>
-            <option value="tomato">Tomato</option>
+            <option value="Maize">Maize</option>
+            <option value="Grapes">Grapes</option>
+            <option value="Orange">Orange</option>
+            <option value="Pepper">Pepper</option>
+            <option value="Potato">Potato</option>
+            <option value="Strawberry">Strawberry</option>
+            <option value="Tomato">Tomato</option>
           </select>
         </div>
 
@@ -75,30 +75,30 @@ export default function YeildForm({ onResponse }: YeildFormProps) {
             <option value="" disabled>
               Select a district
             </option>
-            <option value="colombo">Colombo</option>
-            <option value="gampaha">Gampaha</option>
-            <option value="kaluthara">Kaluthara</option>
-            <option value="kandy">Kandy</option>
-            <option value="matale">Matale</option>
-            <option value="nuwara eliya">Nuwara Eliya</option>
-            <option value="galle">Galle</option>
-            <option value="matara">Matara</option>
-            <option value="hanbantota">Hambantota</option>
-            <option value="jaffna">Jaffna</option>
-            <option value="mannar">Mannar</option>
-            <option value="vavuniya">Vavuniya</option>
-            <option value="mullativu">Mullativu</option>
+            <option value="Colombo">Colombo</option>
+            <option value="Gampaha">Gampaha</option>
+            <option value="Kaluthara">Kaluthara</option>
+            <option value="Kandy">Kandy</option>
+            <option value="Matale">Matale</option>
+            <option value="Nuwara Eliya">Nuwara Eliya</option>
+            <option value="Galle">Galle</option>
+            <option value="Matara">Matara</option>
+            <option value="Hanbantota">Hambantota</option>
+            <option value="Jaffna">Jaffna</option>
+            <option value="Mannar">Mannar</option>
+            <option value="Vavuniya">Vavuniya</option>
+            <option value="Mullativu">Mullativu</option>
             <option value="Batticaloa">Killinochchi</option>
-            <option value="ampara">Ampara</option>
-            <option value="trincomalee">Trincomalee</option>
-            <option value="kurunegala">Kurunegala</option>
-            <option value="puttalam">Puttalam</option>
-            <option value="anuradhapura">Anuradhapura</option>
-            <option value="polonnaruwa">Polonnaruwa</option>
-            <option value="badulla">Badulla</option>
-            <option value="ratnapura">Ratnapura</option>
-            <option value="monaragala">Monaragala</option>
-            <option value="kegalla">Kegalla</option>
+            <option value="Ampara">Ampara</option>
+            <option value="Trincomalee">Trincomalee</option>
+            <option value="Kurunegala">Kurunegala</option>
+            <option value="Puttalam">Puttalam</option>
+            <option value="Anuradhapura">Anuradhapura</option>
+            <option value="Polonnaruwa">Polonnaruwa</option>
+            <option value="Badulla">Badulla</option>
+            <option value="Ratnapura">Ratnapura</option>
+            <option value="Monaragala">Monaragala</option>
+            <option value="Kegalla">Kegalla</option>
           </select>
         </div>
 
@@ -130,9 +130,9 @@ export default function YeildForm({ onResponse }: YeildFormProps) {
             <option value="" disabled>
               Select season
             </option>
-            <option value="yala">Yala</option>
-            <option value="maha">Maha</option>
-            <option value="year">Whole Year</option>
+            <option value="Yala">Yala</option>
+            <option value="Maha">Maha</option>
+            <option value="Year">Whole Year</option>
           </select>
         </div>
 

@@ -1,32 +1,36 @@
 package com.farm_mate.backend.dto;
 
-import jakarta.validation.constraints.NotBlank;
+import com.farm_mate.backend.dto.enums.CropType;
+import com.farm_mate.backend.dto.enums.District;
+import com.farm_mate.backend.dto.enums.Season;
+
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 public class YieldDto {
 
-    @NotBlank(message = "Crop Type is Required")
-    private String cropType;
-    @NotBlank(message = "district is Required")
-    private String district;
+    @NotNull(message = "Crop Type is Required")
+    private CropType cropType;
+    @NotNull(message = "district is Required")
+    private District district;
     @Positive(message = "Area must be positive")
     private float area;
-    @NotBlank(message = "Season is Required")
-    private String season;
+    @NotNull(message = "Season is Required")
+    private Season season;
 
-    public String getCropType() {
+    public CropType getCropType() {
         return cropType;
     }
 
-    public void setCropType(String cropType) {
+    public void setCropType(CropType cropType) {
         this.cropType = cropType;
     }
 
-    public String getDistrict() {
+    public District getDistrict() {
         return district;
     }
 
-    public void setDistrict(String district) {
+    public void setDistrict(District district) {
         this.district = district;
     }
 
@@ -38,11 +42,11 @@ public class YieldDto {
         this.area = area;
     }
 
-    public String getSeason() {
+    public Season getSeason() {
         return season;
     }
 
-    public void setSeason(String season) {
+    public void setSeason(Season season) {
         this.season = season;
     }
 }
