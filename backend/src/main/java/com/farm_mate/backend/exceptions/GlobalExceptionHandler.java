@@ -5,24 +5,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.multipart.MultipartException;
 
-import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.farm_mate.backend.utils.ErrorResponseBody.buildErrorResponse;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-
-    //reusable error response
-    private Map<String, Object> buildErrorResponse(HttpStatus status, Object errorDetails) {
-        Map<String, Object> response = new HashMap<>();
-        response.put("status", status.value());
-        response.put("timestamp", LocalDateTime.now());
-        response.put("errors", errorDetails);
-        return response;
-    }
 
     //exception handle for multipart exception
     @ExceptionHandler(MultipartException.class)
@@ -41,5 +33,17 @@ public class GlobalExceptionHandler {
                 .toList();
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(buildErrorResponse(HttpStatus.BAD_REQUEST, errors));
+    }
+
+    //handling resourceAccessException
+    @ExceptionHandler(ResourceAccessException.class)
+    public ResponseEntity<Map<String, Object>> handleResourceAccessException(ResourceAccessException e) {
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(buildErrorResponse(HttpStatus.SERVICE_UNAVAILABLE, e.getMessage()));
+    }
+
+    //handling all other exceptions
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Map<String, Object>> handleException(Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage()));
     }
 }

@@ -4,8 +4,6 @@
 /machine_learning/disease_detection/valid
 /machine_learning/disease_detection/valid_no_bg
 /machine_learning/disease_detection/test
-/machine_learning/disease_detection/plant_disease_detection_model.keras
-/machine_learning/disease_detection/old_model/
 
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
