@@ -16,31 +16,30 @@ public class DiseaseDetectionService {
 
     public String detectDisease(MultipartFile image) throws Exception {
 
-            //convert image to a byte array
-            byte[] imageBytes = image.getBytes();
+        //convert image to a byte array
+        byte[] imageBytes = image.getBytes();
 
-            //wrap byte array in a byte array resource
-            ByteArrayResource byteArrayResource = new ByteArrayResource(imageBytes) {
+        //wrap byte array in a byte array resource
+        ByteArrayResource byteArrayResource = new ByteArrayResource(imageBytes) {
 
-                //created this as flask is not read the files without file name
-                @Override
-                public String getFilename() {
-                    return image.getOriginalFilename();
-                }
-            };
+            //created this as flask is not read the files without file name
+            @Override
+            public String getFilename() {
+                return image.getOriginalFilename();
+            }
+        };
 
-            //create headers for multipart image
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+        //create headers for multipart image
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
 
-            //create the body of the request
-            MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-            body.add("image", byteArrayResource);
+        //create the body of the request
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("image", byteArrayResource);
 
-            //sending the request to flask server
-            ResponseEntity<String> response = new RestTemplate().postForEntity("http://127.0.0.1:5000/disease-detection", new HttpEntity<>(body, headers), String.class);
+        //sending the request to flask server
+        ResponseEntity<String> response = new RestTemplate().postForEntity("http://127.0.0.1:5000/disease-detection", new HttpEntity<>(body, headers), String.class);
 
-            return response.getBody();
-
+        return response.getBody();
     }
 }

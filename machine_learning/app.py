@@ -58,7 +58,7 @@ def predict_yield(crop, year, season, district, area_hectares):
     total_production = yield_per_hectare * area_hectares
     return total_production
 
-# disease ditection route
+# disease detection route
 @app.route('/disease-detection', methods=['POST'])
 def disease_detect():
     if 'image' not in request.files:
