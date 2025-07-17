@@ -1,35 +1,11 @@
-import React, { useState } from "react";
+"use client";
+
+import { yieldPrediction } from "@/actions/YieldFormAction";
 import Button from "../button";
+import { useActionState } from "react";
 
-type YeildFormProps = {
-  onResponse: (data: string | null) => void;
-};
-
-type formDataType = {
-  cropType: string;
-  district: string;
-  area: number;
-  season: string;
-};
-
-export default function YeildForm({ onResponse }: YeildFormProps) {
-  const [formData, setFormData] = useState<formDataType>({
-    cropType: "",
-    district: "",
-    area: 0,
-    season: "",
-  });
-
-  const handlePridictClick = () => {};
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
-  ) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
+export default function YeildForm() {
+  const [state, action, isPending] = useActionState(yieldPrediction, null);
 
   return (
     <div className="lg:col-span-2 bg-custom-card-bg rounded-xl border-1 border-border-gray-400 p-6 flex items-start justify-center flex-col">
@@ -38,16 +14,15 @@ export default function YeildForm({ onResponse }: YeildFormProps) {
         Fill in the details of your farming conditions to get accurate yield
         predictions
       </p>
-      <form className="w-full space-y-4 mt-4">
+      <form action={action} className="w-full space-y-4 mt-4">
         <div>
           <label htmlFor="cropType">Crop Type: </label>
           <select
             id="cropType"
             name="cropType"
-            value={formData.cropType}
-            onChange={handleChange}
             className="w-full p-2 border rounded-md bg-background"
             required
+            defaultValue={""}
           >
             <option value="" disabled>
               Select a crop
@@ -67,10 +42,9 @@ export default function YeildForm({ onResponse }: YeildFormProps) {
           <select
             id="district"
             name="district"
-            value={formData.district}
-            onChange={handleChange}
             className="w-full p-2 border rounded-md bg-background"
             required
+            defaultValue={""}
           >
             <option value="" disabled>
               Select a district
@@ -110,8 +84,7 @@ export default function YeildForm({ onResponse }: YeildFormProps) {
             name="area"
             step="0.1"
             min="0"
-            value={formData.area}
-            onChange={handleChange}
+            defaultValue={0}
             className="w-full p-2 border rounded-md bg-background"
             required
           />
@@ -122,10 +95,9 @@ export default function YeildForm({ onResponse }: YeildFormProps) {
           <select
             id="season"
             name="season"
-            value={formData.season}
-            onChange={handleChange}
             className="w-full p-2 border rounded-md bg-background"
             required
+            defaultValue={""}
           >
             <option value="" disabled>
               Select season
@@ -137,8 +109,8 @@ export default function YeildForm({ onResponse }: YeildFormProps) {
         </div>
 
         <Button
+          type="submit"
           text="Predict Yield"
-          onClick={handlePridictClick}
           className="w-full bg-primaryGreen px-4 py-2 border-1 my-2 rounded-xl"
         />
       </form>

@@ -7,8 +7,9 @@ interface buttonProps {
   icon?: string;
   text: string;
   type?: "button" | "submit";
-  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   className?: string;
+  disabled?: boolean;
 }
 
 const Button: React.FC<buttonProps> = ({
@@ -17,9 +18,11 @@ const Button: React.FC<buttonProps> = ({
   type = "button",
   onClick,
   className,
+  disabled = false,
 }) => {
   return (
     <button
+      disabled={disabled}
       type={type}
       onClick={onClick}
       className={`${className} flex items-center justify-center gap-2 md:gap-4 text-sm md:text-base cursor-pointer active:scale-95 transition-all opacity-100 hover:opacity-80 duration-150`}

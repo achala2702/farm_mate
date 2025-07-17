@@ -3,16 +3,10 @@
 import React, { useState, useRef, DragEvent } from "react";
 import Button from "../button";
 import { Icon } from "@iconify/react";
+import DiseaseDetection from "@/actions/DIseaseDetectionAction";
 
-type UploadImageCardProps = {
-  uplodedImage: File | null;
-  setUploadedImage: (file: File | null) => void;
-};
-
-export default function UploadImageCard({
-  uplodedImage,
-  setUploadedImage,
-}: UploadImageCardProps) {
+export default function UploadImageCard({}) {
+  const [uplodedImage, setUploadedImage] = useState<File | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [isDragging, setIsDragging] = useState<boolean>(false);
 
@@ -57,9 +51,41 @@ export default function UploadImageCard({
     setIsDragging(false);
   };
 
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    if (uplodedImage) {
+      formData.append("image", uplodedImage);
+    }
+
+    try {
+      const data = await DiseaseDetection(null, formData);
+
+      console.log(data);
+      removeSelectedImage();
+    } catch (err) {
+      console.error("Detection failed:", err);
+    }
+  };
+
   return (
-    <div className="rounded-xl border-1 border-border-gray-400 bg-custom-card-bg p-6 lg:col-span-2">
-      <h1 className="text-xl xl:text-2xl font-bold mb-4">Upload Image</h1>
+    <form
+      onSubmit={handleFormSubmit}
+      className="rounded-xl border-1 border-border-gray-400 bg-custom-card-bg p-6 lg:col-span-2"
+    >
+      <div className="flex justify-between items-center py-2">
+        <h1 className="text-xl xl:text-2xl font-bold mb-4">Upload Image</h1>
+        <Button
+          disabled={!uplodedImage}
+          className={`${
+            !uplodedImage ? "text-foreground/30 pointer-events-none" : " "
+          }  bg-background p-3 text-sm border-1 rounded-xl`}
+          type="submit"
+          text="Diagnose Now"
+        />
+      </div>
+
       <div
         onDrop={handleFileDrop}
         onDragOver={handleDragOver}
@@ -83,7 +109,7 @@ export default function UploadImageCard({
           </>
         ) : (
           <>
-          <Icon icon="solar:upload-broken" width={32} />
+            <Icon icon="solar:upload-broken" width={32} />
             <h2 className="text-base md:text-xl font-bold text-center">
               Drag and drop or click to upload
             </h2>
@@ -106,6 +132,6 @@ export default function UploadImageCard({
           </>
         )}
       </div>
-    </div>
+    </form>
   );
 }

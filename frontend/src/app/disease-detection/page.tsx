@@ -1,6 +1,3 @@
-"use client";
-
-import { useState } from "react";
 import RootLayout from "@/layouts/RootLayout";
 import DetectionResults from "@/components/disease_detection/DetectionResults";
 import UploadImageCard from "@/components/disease_detection/UploadImageCard";
@@ -61,8 +58,6 @@ const commonDiseases = [
 ];
 
 export default function DiseaseDetection() {
-  const [uplodedImage, setUploadedImage] = useState<File | null>(null);
-
   return (
     <RootLayout>
       <div className="">
@@ -73,10 +68,7 @@ export default function DiseaseDetection() {
           Upload an image of your crop to identify potential disease
         </p>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 my-6">
-          <UploadImageCard
-            uplodedImage={uplodedImage}
-            setUploadedImage={setUploadedImage}
-          />
+          <UploadImageCard />
           <DetectionResults />
         </div>
         <h1 className="text-2xl xl:text-4xl font-bold">Supported Crops</h1>

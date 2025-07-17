@@ -1,6 +1,3 @@
-"use client";
-
-import { useState } from "react";
 import YeildForm from "@/components/yeild_prediction/YieldForm";
 import RootLayout from "@/layouts/RootLayout";
 import CropCard from "@/components/CropCard";
@@ -24,7 +21,6 @@ const suportedCrops = [
 ];
 
 export default function YeildPrediction() {
-  const [responseData, setResponseData] = useState<null | string>(null);
 
   return (
     <RootLayout>
@@ -36,7 +32,7 @@ export default function YeildPrediction() {
           Estimate your potential crop yield based on various factors
         </p>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-6">
-          <YeildForm onResponse={setResponseData} />
+          <YeildForm />
           <div className="rounded-xl border-1 border-border-gray-400 bg-custom-card-bg p-6">
             <h1 className="text-xl xl:text-2xl font-bold mb-4">
               Detection Results
