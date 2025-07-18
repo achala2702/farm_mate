@@ -2,7 +2,7 @@
 
 import { yieldPrediction } from "@/actions/YieldFormAction";
 import Button from "../button";
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { setYieldData } from "@/redux/slices/YieldPredectionSlice";
 import { useDispatch } from "react-redux";
 import type { AppDispatch } from "@/redux/store";
@@ -10,12 +10,17 @@ import type { AppDispatch } from "@/redux/store";
 export default function YeildForm() {
   const [state, action, isPending] = useActionState(yieldPrediction, null);
   const dispatch = useDispatch<AppDispatch>();
+  const [error, setError] = useState<null | string>(null);
 
   //setting the data if it success
   useEffect(() => {
     if (state?.success) {
       console.log(state.data);
       dispatch(setYieldData(state.data));
+    } else if(state?.error.errors) {
+      setError(state?.error.errors);
+    } else {
+      setError(state?.error);
     }
   }, [state]);
 
@@ -122,9 +127,11 @@ export default function YeildForm() {
 
         <Button
           type="submit"
-          text={isPending ? "Predciting..." : "Predict Yield"}
+          text={isPending ? "Predicting..." : "Predict Yield"}
           className="w-full bg-primaryGreen px-4 py-2 border-1 my-2 rounded-xl"
+          onClick={() => setError(null)}
         />
+        {error && <p className="text-red-500 text-sm">{error}</p>}
       </form>
     </div>
   );

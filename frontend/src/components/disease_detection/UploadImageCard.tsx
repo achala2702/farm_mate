@@ -12,6 +12,8 @@ export default function UploadImageCard({}) {
   const [uplodedImage, setUploadedImage] = useState<File | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [error, setError] = useState<null | string>(null);
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -31,6 +33,7 @@ export default function UploadImageCard({}) {
   //removing selected image
   const removeSelectedImage = () => {
     setUploadedImage(null);
+    setError(null);
   };
 
   //handle file drop to the div
@@ -58,6 +61,9 @@ export default function UploadImageCard({}) {
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
+
+    setError(null);
 
     const formData = new FormData();
     if (uplodedImage) {
@@ -66,13 +72,20 @@ export default function UploadImageCard({}) {
 
     try {
       const data = await DiseaseDetection(null, formData);
+      setLoading(false);
 
       if (data.success) {
         dispatch(setDiseaseData(data.data));
+        removeSelectedImage();
+      } else if(data.error.errors) {
+        setError(data.error.errors);
+      } else{
+        setError(data.error)
       }
-      removeSelectedImage();
     } catch (err) {
       console.error("Detection failed:", err);
+      setError("err");
+      setLoading(false);
     }
   };
 
@@ -89,7 +102,7 @@ export default function UploadImageCard({}) {
             !uplodedImage ? "text-foreground/30 pointer-events-none" : " "
           }  bg-background p-3 text-sm border-1 rounded-xl`}
           type="submit"
-          text="Diagnose Now"
+          text={loading?"Diagnosing...":"Diagnose Now"}
         />
       </div>
 
@@ -138,6 +151,7 @@ export default function UploadImageCard({}) {
             />
           </>
         )}
+        {error && <p className="text-red-500 text-sm">{error}</p>}
       </div>
     </form>
   );
