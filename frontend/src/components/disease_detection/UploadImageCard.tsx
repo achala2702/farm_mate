@@ -4,11 +4,16 @@ import React, { useState, useRef, DragEvent } from "react";
 import Button from "../button";
 import { Icon } from "@iconify/react";
 import DiseaseDetection from "@/actions/DIseaseDetectionAction";
+import { setDiseaseData } from "@/redux/slices/DiseaseDetectionSlice";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "@/redux/store";
 
 export default function UploadImageCard({}) {
   const [uplodedImage, setUploadedImage] = useState<File | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [isDragging, setIsDragging] = useState<boolean>(false);
+
+  const dispatch = useDispatch<AppDispatch>();
 
   //opeening the file upload dialog
   const handleUploadButtonClick = () => {
@@ -62,7 +67,9 @@ export default function UploadImageCard({}) {
     try {
       const data = await DiseaseDetection(null, formData);
 
-      console.log(data);
+      if (data.success) {
+        dispatch(setDiseaseData(data.data));
+      }
       removeSelectedImage();
     } catch (err) {
       console.error("Detection failed:", err);

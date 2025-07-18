@@ -2,10 +2,22 @@
 
 import { yieldPrediction } from "@/actions/YieldFormAction";
 import Button from "../button";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
+import { setYieldData } from "@/redux/slices/YieldPredectionSlice";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "@/redux/store";
 
 export default function YeildForm() {
   const [state, action, isPending] = useActionState(yieldPrediction, null);
+  const dispatch = useDispatch<AppDispatch>();
+
+  //setting the data if it success
+  useEffect(() => {
+    if (state?.success) {
+      console.log(state.data);
+      dispatch(setYieldData(state.data));
+    }
+  }, [state]);
 
   return (
     <div className="lg:col-span-2 bg-custom-card-bg rounded-xl border-1 border-border-gray-400 p-6 flex items-start justify-center flex-col">
@@ -110,7 +122,7 @@ export default function YeildForm() {
 
         <Button
           type="submit"
-          text="Predict Yield"
+          text={isPending ? "Predciting..." : "Predict Yield"}
           className="w-full bg-primaryGreen px-4 py-2 border-1 my-2 rounded-xl"
         />
       </form>
