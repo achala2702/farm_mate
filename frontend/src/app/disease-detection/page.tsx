@@ -4,15 +4,15 @@ import UploadImageCard from "@/components/disease_detection/UploadImageCard";
 import CropCard from "@/components/CropCard";
 import DiseaseCard from "@/components/disease_detection/DiseaseCard";
 
-import maizeImg from "@/assets/images/maize.jpg";
+import maizeImg from "@/assets/images/maize.webp";
 import appleImg from "@/assets/images/apples.webp";
 import cherryImg from "@/assets/images/cherry.webp";
-import grapesImg from "@/assets/images/grapes.png";
-import orangeImg from "@/assets/images/orange.jpg";
+import grapesImg from "@/assets/images/grapes.webp";
+import orangeImg from "@/assets/images/orange.webp";
 import peachImg from "@/assets/images/Peach.webp";
-import pepperImg from "@/assets/images/pepper.jpg";
-import potatoImg from "@/assets/images/potato.jpg";
-import strawberryImg from "@/assets/images/strawberry.jpg";
+import pepperImg from "@/assets/images/pepper.webp";
+import potatoImg from "@/assets/images/potato.webp";
+import strawberryImg from "@/assets/images/strawberry.webp";
 import tomatoImg from "@/assets/images/tomato.webp";
 
 const suportedCrops = [
@@ -41,11 +41,7 @@ const commonDiseases = [
   { diseaseName: "Citrus Canker", crops: ["Orange"], symptoms: "" },
   { diseaseName: "Yellow Leaf", crops: ["Orange"], symptoms: "" },
   { diseaseName: "Citrus Greening", crops: ["Orange"], symptoms: "" },
-  {
-    diseaseName: "Bacterial Spot",
-    crops: ["Peach", "Pepper", "Tomato"],
-    symptoms: "",
-  },
+  { diseaseName: "Bacterial Spot", crops: ["Peach", "Pepper", "Tomato"], symptoms: "" },
   { diseaseName: "Early Blight", crops: ["Potato", "Tomato"], symptoms: "" },
   { diseaseName: "Late Blight", crops: ["Potato", "Tomato"], symptoms: "" },
   { diseaseName: "Leaf Scorch", crops: ["Strawberry"], symptoms: "" },

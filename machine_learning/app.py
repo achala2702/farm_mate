@@ -61,6 +61,9 @@ def predict_yield(crop, year, season, district, area_hectares):
     
     # Calculate total production
     total_production = yield_per_hectare * area_hectares
+
+    total_production = round(abs(total_production), 2)
+
     return total_production
 
 # disease detection route

@@ -74,7 +74,7 @@ export default function UploadImageCard({}) {
       onSubmit={handleFormSubmit}
       className="rounded-xl border-1 border-border-gray-400 bg-custom-card-bg p-6 lg:col-span-2"
     >
-      <div className="flex justify-between items-center py-2">
+      <div className="flex justify-between items-center pb-2">
         <h1 className="text-xl xl:text-2xl font-bold mb-4">Upload Image</h1>
         <Button
           disabled={!uplodedImage}

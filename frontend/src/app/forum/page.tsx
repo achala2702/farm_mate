@@ -1,5 +1,3 @@
-"use client";
-
 import Categories from "@/components/forum/Categories";
 import Discussions from "@/components/forum/Discussions";
 import Header from "@/components/forum/Header";
@@ -83,10 +81,9 @@ const discussions = [
 ];
 
 export default function ForumPage() {
-  const handleSearch = () => {};
   return (
     <RootLayout>
-      <Header searchFunction={handleSearch} />
+      <Header />
       <Categories categories={categories_list}/>
       <Discussions discussions = {discussions}/>
     </RootLayout>

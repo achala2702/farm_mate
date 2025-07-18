@@ -3,7 +3,7 @@
 import { AuthImageProvider, useAuthImage } from "@/context/AuthImageContext";
 import AuthLayout from "@/layouts/AuthLayout";
 import { useEffect } from "react";
-import login_img from "@/assets/images/login.jpg";
+import login_img from "@/assets/images/login.webp";
 import LoginForm from "@/components/auth/LoginForm";
 
 const LoginContent = () => {

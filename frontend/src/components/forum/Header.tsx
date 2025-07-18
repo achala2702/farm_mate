@@ -1,14 +1,16 @@
+"use client";
+
 import React from "react";
 import SearchInput from "../SearchInput";
 import Button from "../button";
 import useScreenWidth from "@/hooks/useScreenWidth";
 
-interface HeaderProps {
-  searchFunction: () => void;
-}
-
-export default function Header({ searchFunction }: HeaderProps) {
+export default function Header() {
   const screenWidth = useScreenWidth();
+
+  const searchFunction = ()=>{
+    
+  }
 
   return (
     <div className="bg-primaryGreen text-[#f8fbe7] flex flex-col items-center justify-center py-6 gap-4 rounded-xl">

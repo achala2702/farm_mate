@@ -3,7 +3,7 @@
 import AuthLayout from "@/layouts/AuthLayout";
 import { AuthImageProvider, useAuthImage } from "@/context/AuthImageContext";
 import { useEffect } from "react";
-import sigin_img from "@/assets/images/signin.jpg";
+import sigin_img from "@/assets/images/signin.webp";
 import SignupForm from "@/components/auth/SignupForm";
 
 const SigninContent = () => {

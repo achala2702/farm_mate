@@ -2,13 +2,14 @@ import YeildForm from "@/components/yeild_prediction/YieldForm";
 import RootLayout from "@/layouts/RootLayout";
 import CropCard from "@/components/CropCard";
 
-import maizeImg from "@/assets/images/maize.jpg";
-import grapesImg from "@/assets/images/grapes.png";
-import orangeImg from "@/assets/images/orange.jpg";
-import pepperImg from "@/assets/images/pepper.jpg";
-import potatoImg from "@/assets/images/potato.jpg";
-import strawberryImg from "@/assets/images/strawberry.jpg";
+import maizeImg from "@/assets/images/maize.webp";
+import grapesImg from "@/assets/images/grapes.webp";
+import orangeImg from "@/assets/images/orange.webp";
+import pepperImg from "@/assets/images/pepper.webp";
+import potatoImg from "@/assets/images/potato.webp";
+import strawberryImg from "@/assets/images/strawberry.webp";
 import tomatoImg from "@/assets/images/tomato.webp";
+import YieldPredictionResult from "@/components/yeild_prediction/YieldPredictionResult";
 
 const suportedCrops = [
   { cropName: "Maize", cropImage: maizeImg.src },
@@ -21,7 +22,6 @@ const suportedCrops = [
 ];
 
 export default function YeildPrediction() {
-
   return (
     <RootLayout>
       <div>
@@ -33,12 +33,7 @@ export default function YeildPrediction() {
         </p>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-6">
           <YeildForm />
-          <div className="rounded-xl border-1 border-border-gray-400 bg-custom-card-bg p-6">
-            <h1 className="text-xl xl:text-2xl font-bold mb-4">
-              Detection Results
-            </h1>
-            <p>gdgdg</p>
-          </div>
+          <YieldPredictionResult />
         </div>
       </div>
       <div>
