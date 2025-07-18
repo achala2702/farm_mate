@@ -5,8 +5,18 @@
 This project consists of multiple components:
 
 - A **Flask backend** serving Machine Learning models.
-- A **Next.js frontend** (coming soon).
-- A **Spring Boot backend** (coming soon).
+- A **Next.js frontend** for the user interface.
+- A **Spring Boot backend** handling core API functionality.
+
+---
+
+## 🚧 Project Status
+
+This is an ongoing project. Currently:
+
+- ✅ The **Machine Learning backend (Flask)** is fully functional.
+- ✅ The **frontend (Next.js)** and **backend (Spring Boot)** are set up and integrated with the ML module.
+- ⚠️ Other features like **community forum**, **user profiles**, **user authentication**, and additional routes are still under development.
 
 ---
 
@@ -39,3 +49,51 @@ rembg==2.0.67
 cd machine_learning
 python app.py
 ```
+## Core Backend (Spring Boot)
+
+### Setup
+✅ Ensure you have **Java 21+** and **Maven** installed.
+
+1. **Navigate to the Spring Boot project directory:**
+   ```bash
+   cd backend
+   ```
+
+2. **Run the backend server:**
+   ```bash
+   ./mvnw spring-boot:run
+   ```
+
+By default, the server runs at: `http://localhost:8080/api`
+
+## Frontend (Next.js)
+
+### Setup
+✅ Ensure you have **Node.js 22+** and **Yarn** or **npm** installed.
+
+1. **Navigate to the frontend directory:**
+   ```bash
+   cd frontend
+   ```
+
+2. **Create a `.env.local` file:**
+   ```bash
+   touch .env.local
+   ```
+
+3. **Add the following line to `.env.local`:**
+   ```bash
+   BACKEND_URL=http://localhost:8080/api
+   ```
+
+4. **Install dependencies:**
+   ```bash
+   yarn install # or npm install
+   ```
+
+5. **Run the development server:**
+   ```bash
+   yarn dev # or npm run dev
+   ```
+
+The frontend will be available at: `http://localhost:3000/forum`
