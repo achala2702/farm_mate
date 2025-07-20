@@ -48,6 +48,12 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(e.getStatusCode()).body(buildErrorResponse(e.getStatusCode(), e.getMessage()));
     }
 
+    //handling user already exists exception
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<Map<String, Object>> handleUserAlreadyExistsException(UserAlreadyExistsException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(buildErrorResponse(HttpStatus.CONFLICT, e.getMessage()));
+    }
+
     //handling all other exceptions
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleException(Exception e) {
