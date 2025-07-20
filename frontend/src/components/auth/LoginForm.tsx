@@ -1,20 +1,13 @@
+"use client";
+
 import React, { useState } from "react";
 import Button from "../button";
 import Link from "next/link";
 
-interface LoginFormProps {
-  onLogin: (email: string, password: string) => void;
-}
-
-const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
+export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState<boolean>(false);
-
-  const handleLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    onLogin(email, password);
-  };
 
   const handleLoginGoogle = () => {};
   const handleLoginFacebook = () => {};
@@ -66,7 +59,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
 
         <Button
           text="Sign In"
-          onClick={handleLogin}
           className="bg-primaryGreen w-full text-white rounded-md p-2 font-semibold"
         />
       </form>
@@ -92,12 +84,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
 
       <p>
         Don't have an account?{" "}
-        <Link href="/sign-in" className="text-primaryGreen">
+        <Link href="/register" className="text-primaryGreen">
           Sign up
         </Link>
       </p>
     </div>
   );
 };
-
-export default LoginForm;

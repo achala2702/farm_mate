@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -21,7 +23,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> userRegister (@Valid @RequestBody UserRegistrationDto userDto) {
-      return ResponseEntity.status(HttpStatus.CREATED).body(authService.userRegistration(userDto));
+    public ResponseEntity<Map<String,String>> userRegister (@Valid @RequestBody UserRegistrationDto userDto) {
+      return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("message","User registered successfully"));
     }
 }
