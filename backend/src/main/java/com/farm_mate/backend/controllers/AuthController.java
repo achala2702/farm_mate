@@ -24,6 +24,6 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<Map<String,String>> userRegister (@Valid @RequestBody UserRegistrationDto userDto) {
-      return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("message","User registered successfully"));
+      return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("message",authService.userRegistration(userDto)));
     }
 }

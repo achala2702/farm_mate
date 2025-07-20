@@ -23,11 +23,9 @@ public class AuthService {
     public String userRegistration(UserRegistrationDto userRegistrationDto) {
 
         //checking for existing user
-        Optional<UserEntity> existingUser = userRepository.findByEmail(userRegistrationDto.getEmail());
-        if(existingUser.isPresent()){
+        if(userRepository.existsByEmail(userRegistrationDto.getEmail())){
             throw new UserAlreadyExistsException("User with email " + userRegistrationDto.getEmail() + " already exists.");
         }
-
         //adding new user
         UserEntity user = userMapper.mapToUserEntity(userRegistrationDto);
         UserEntity savedUser = userRepository.save(user);
