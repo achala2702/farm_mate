@@ -1,11 +1,15 @@
-import { useAuthImage } from "@/context/AuthImageContext";
+"use client";
+
+import { usePathname } from "next/navigation";
+import sigin_img from "@/assets/images/signin.webp";
+import login_img from "@/assets/images/login.webp";
 
 interface AuthLayoutProps {
   children: React.ReactNode;
 }
 
 const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => {
-  const { imgSrc } = useAuthImage();
+  const pathName = usePathname()
 
   return (
     <div className="flex my-6 lg:m-0 lg:h-screen">
@@ -16,7 +20,7 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => {
       </div>
       {/* right side */}
       <div className="hidden lg:block h-screen lg:w-1/2 overflow-hidden">
-        <img src={imgSrc} alt="Auth Image" className="h-full w-full object-cover" />
+        <img src={pathName === "/register"? sigin_img.src:login_img.src} alt="Auth Image" className="h-full w-full object-cover" />
       </div>
     </div>
   );

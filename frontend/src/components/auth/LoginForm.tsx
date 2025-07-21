@@ -1,20 +1,38 @@
-import React, { useState } from "react";
+"use client";
+
+import React, { useActionState, useEffect } from "react";
 import Button from "../button";
 import Link from "next/link";
+import { userLogin } from "@/actions/AuthActions";
+import useErrorHandler from "@/hooks/useErrorHandler";
+import { useDispatch } from "react-redux";
+import { setLoginData } from "@/redux/slices/AuthenticationSlice";
+import type { AppDispatch } from "@/redux/store";
+import { useRouter } from "next/navigation";
 
-interface LoginFormProps {
-  onLogin: (email: string, password: string) => void;
-}
+export default function LoginForm() {
+  const [state, action, isPending] = useActionState(userLogin, null);
+  const { error, setError } = useErrorHandler();
+  const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
 
-const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState<boolean>(false);
+  useEffect(() => {
+    if (!state?.success) {
+      setError(state?.error);
+    } else {
+      localStorage.setItem("farm_mate_token", state.data.token);
 
-  const handleLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    onLogin(email, password);
-  };
+      dispatch(
+        setLoginData({
+          email: state.data.email,
+          firstName: state.data.firstName,
+          lastName: state.data.lastName,
+        })
+      );
+
+      router.push("/forum");
+    }
+  }, [state]);
 
   const handleLoginGoogle = () => {};
   const handleLoginFacebook = () => {};
@@ -28,15 +46,17 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
         <p>Enter your email and password to access your account</p>
       </div>
 
-      <form className="flex flex-col justify-center items-center gap-4 w-full">
+      <form
+        action={action}
+        className="flex flex-col justify-center items-center gap-4 w-full"
+      >
         <input
           type="email"
           placeholder="Email"
           name="email"
           autoComplete="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
           className="w-full border-1 border-gray-300 p-2 rounded-md"
+          required
         ></input>
 
         <input
@@ -44,9 +64,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
           placeholder="Password"
           name="password"
           autoComplete="current-password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
           className="w-full border-1 border-gray-300 p-2 rounded-md"
+          required
         ></input>
 
         <div className="flex w-full justify-between text-base">
@@ -54,8 +73,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
             <input
               type="checkbox"
               id="remeberMe"
-              checked={rememberMe}
-              onChange={() => setRememberMe(!rememberMe)}
               className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
             ></input>
             <label htmlFor="remeberMe">Remeber me</label>
@@ -65,10 +82,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
         </div>
 
         <Button
-          text="Sign In"
-          onClick={handleLogin}
+          type="submit"
+          text={isPending ? "Please wait..." : "Sign In"}
           className="bg-primaryGreen w-full text-white rounded-md p-2 font-semibold"
         />
+        {error && <p className="text-red-500">{error}</p>}
       </form>
 
       <div className="flex w-full items-center justify-center gap-2 text-sm">
@@ -92,12 +110,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
 
       <p>
         Don't have an account?{" "}
-        <Link href="/sign-in" className="text-primaryGreen">
+        <Link href="/register" className="text-primaryGreen">
           Sign up
         </Link>
       </p>
     </div>
   );
-};
-
-export default LoginForm;
+}

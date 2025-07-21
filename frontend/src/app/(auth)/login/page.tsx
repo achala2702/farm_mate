@@ -1,33 +1,12 @@
-"use client";
 
-import { AuthImageProvider, useAuthImage } from "@/context/AuthImageContext";
 import AuthLayout from "@/layouts/AuthLayout";
-import { useEffect } from "react";
-import login_img from "@/assets/images/login.webp";
 import LoginForm from "@/components/auth/LoginForm";
 
-const LoginContent = () => {
-  const { setImgSrc } = useAuthImage();
-
-  useEffect(() => {
-    setImgSrc(login_img.src);
-  }, []);
-
-  const handleLogin = (email: string, password: string) => {
-    console.log(email, password);
-  };
+export default function LoginPage() {
 
   return (
     <AuthLayout>
-      <LoginForm onLogin={handleLogin} />
+      <LoginForm />
     </AuthLayout>
   );
 };
-
-export default function LoginPage() {
-  return (
-    <AuthImageProvider>
-      <LoginContent />
-    </AuthImageProvider>
-  );
-}

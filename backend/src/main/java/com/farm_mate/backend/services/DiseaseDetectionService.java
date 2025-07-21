@@ -14,6 +14,12 @@ import org.springframework.http.HttpHeaders;
 @Service
 public class DiseaseDetectionService {
 
+    private final RestTemplate restTemplate;
+
+    public DiseaseDetectionService(RestTemplate restTemplate){
+        this.restTemplate=restTemplate;
+    }
+
     public String detectDisease(MultipartFile image) throws Exception {
 
         //convert image to a byte array
@@ -38,7 +44,7 @@ public class DiseaseDetectionService {
         body.add("image", byteArrayResource);
 
         //sending the request to flask server
-        ResponseEntity<String> response = new RestTemplate().postForEntity("http://127.0.0.1:5000/disease-detection", new HttpEntity<>(body, headers), String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity("http://127.0.0.1:5000/disease-detection", new HttpEntity<>(body, headers), String.class);
 
         return response.getBody();
     }

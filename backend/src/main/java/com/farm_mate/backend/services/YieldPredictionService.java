@@ -12,6 +12,12 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class YieldPredictionService {
 
+    private final RestTemplate restTemplate;
+
+    public YieldPredictionService(RestTemplate restTemplate){
+        this.restTemplate=restTemplate;
+    }
+
     public double predictYield (YieldDto dto) {
 
         //headers for json
@@ -19,7 +25,7 @@ public class YieldPredictionService {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         //sending the request to flask server
-        ResponseEntity<JsonNode> response = new RestTemplate().postForEntity("http://127.0.0.1:5000/yield-prediction", new HttpEntity<>(dto, headers), JsonNode.class);
+        ResponseEntity<JsonNode> response = restTemplate.postForEntity("http://127.0.0.1:5000/yield-prediction", new HttpEntity<>(dto, headers), JsonNode.class);
 
         if(response.getBody() != null && response.getBody().has("prediction")) {
             return response.getBody().get("prediction").asDouble();
