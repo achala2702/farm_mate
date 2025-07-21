@@ -1,0 +1,67 @@
+package com.farm_mate.backend.config;
+
+import com.farm_mate.backend.utils.JwtUtil;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+
+@Component
+public class CustomJwtFilter extends OncePerRequestFilter {
+
+    private static final String AUTH_HEADER = "Authorization";
+    private static final String BEARER = "Bearer ";
+
+    private JwtUtil jwtUtil;
+
+    public CustomJwtFilter(JwtUtil jwtUtil) {
+        this.jwtUtil = jwtUtil;
+    }
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+
+        try{
+            final String authHeader = request.getHeader(AUTH_HEADER);
+            String jwt;
+
+            if(authHeader != null && authHeader.startsWith(BEARER)){
+                //getting jwt
+                jwt = authHeader.substring(BEARER.length());
+
+                //validate and getting claims from token
+                Claims claims = jwtUtil.validateJwt(jwt);
+
+                //create an authentication token with the email in token
+                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(claims.getSubject(), null, Collections.emptyList());
+
+                //set the authentication for current request so it can pass security
+                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+            }
+            filterChain.doFilter(request, response);
+
+        }catch(ExpiredJwtException e){
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType("application/json");
+            response.getWriter().write("{\"error\": \"JWT token is expired\"}");
+        } catch (JwtException e) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType("application/json");
+            response.getWriter().write("{\"error\": \"Invalid JWT token\"}");
+        }
+    }
+}
