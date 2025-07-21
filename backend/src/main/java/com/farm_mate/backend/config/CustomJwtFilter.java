@@ -9,16 +9,12 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.List;
 
 @Component
 public class CustomJwtFilter extends OncePerRequestFilter {
@@ -26,7 +22,7 @@ public class CustomJwtFilter extends OncePerRequestFilter {
     private static final String AUTH_HEADER = "Authorization";
     private static final String BEARER = "Bearer ";
 
-    private JwtUtil jwtUtil;
+    private final JwtUtil jwtUtil;
 
     public CustomJwtFilter(JwtUtil jwtUtil) {
         this.jwtUtil = jwtUtil;

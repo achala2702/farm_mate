@@ -1,13 +1,13 @@
 "use server";
 
-type UserRegistration =
-  | { success: true; data: String }
+type UserAuth =
+  | { success: true; data: any }
   | { success: false; error: any };
 
 export async function userRegister(
-  prevState: UserRegistration | null,
+  prevState: UserAuth | null,
   formData: FormData
-): Promise<UserRegistration> {
+): Promise<UserAuth> {
   try {
     const payload = {
       email: formData.get("email")?.toString(),
@@ -35,6 +35,36 @@ export async function userRegister(
   } catch (error) {
     console.log(error);
 
+    return { success: false, error: "Please try again later!" };
+  }
+}
+
+export async function userLogin(
+  prevState: UserAuth | null,
+  formData: FormData
+): Promise<UserAuth> {
+  try {
+    const payload = {
+      email: formData.get("email")?.toString(),
+      password: formData.get("password")?.toString(),
+    };
+
+    const res = await fetch(`${process.env.BACKEND_URL}/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      return { success: false, error: data.errors };
+    }
+
+    return { success: true, data: data };
+  } catch (error) {
     return { success: false, error: "Please try again later!" };
   }
 }

@@ -1,13 +1,38 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useActionState, useEffect } from "react";
 import Button from "../button";
 import Link from "next/link";
+import { userLogin } from "@/actions/AuthActions";
+import useErrorHandler from "@/hooks/useErrorHandler";
+import { useDispatch } from "react-redux";
+import { setLoginData } from "@/redux/slices/AuthenticationSlice";
+import type { AppDispatch } from "@/redux/store";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState<boolean>(false);
+  const [state, action, isPending] = useActionState(userLogin, null);
+  const { error, setError } = useErrorHandler();
+  const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!state?.success) {
+      setError(state?.error);
+    } else {
+      localStorage.setItem("farm_mate_token", state.data.token);
+
+      dispatch(
+        setLoginData({
+          email: state.data.email,
+          firstName: state.data.firstName,
+          lastName: state.data.lastName,
+        })
+      );
+
+      router.push("/forum");
+    }
+  }, [state]);
 
   const handleLoginGoogle = () => {};
   const handleLoginFacebook = () => {};
@@ -21,15 +46,17 @@ export default function LoginForm() {
         <p>Enter your email and password to access your account</p>
       </div>
 
-      <form className="flex flex-col justify-center items-center gap-4 w-full">
+      <form
+        action={action}
+        className="flex flex-col justify-center items-center gap-4 w-full"
+      >
         <input
           type="email"
           placeholder="Email"
           name="email"
           autoComplete="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
           className="w-full border-1 border-gray-300 p-2 rounded-md"
+          required
         ></input>
 
         <input
@@ -37,9 +64,8 @@ export default function LoginForm() {
           placeholder="Password"
           name="password"
           autoComplete="current-password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
           className="w-full border-1 border-gray-300 p-2 rounded-md"
+          required
         ></input>
 
         <div className="flex w-full justify-between text-base">
@@ -47,8 +73,6 @@ export default function LoginForm() {
             <input
               type="checkbox"
               id="remeberMe"
-              checked={rememberMe}
-              onChange={() => setRememberMe(!rememberMe)}
               className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
             ></input>
             <label htmlFor="remeberMe">Remeber me</label>
@@ -58,9 +82,11 @@ export default function LoginForm() {
         </div>
 
         <Button
-          text="Sign In"
+          type="submit"
+          text={isPending ? "Please wait..." : "Sign In"}
           className="bg-primaryGreen w-full text-white rounded-md p-2 font-semibold"
         />
+        {error && <p className="text-red-500">{error}</p>}
       </form>
 
       <div className="flex w-full items-center justify-center gap-2 text-sm">
@@ -90,4 +116,4 @@ export default function LoginForm() {
       </p>
     </div>
   );
-};
+}
