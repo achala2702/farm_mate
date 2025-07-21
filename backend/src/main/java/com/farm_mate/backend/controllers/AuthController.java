@@ -1,5 +1,7 @@
 package com.farm_mate.backend.controllers;
 
+import com.farm_mate.backend.dto.UserLoginDto;
+import com.farm_mate.backend.dto.UserLoginResponseDto;
 import com.farm_mate.backend.dto.UserRegistrationDto;
 import com.farm_mate.backend.services.AuthService;
 import jakarta.validation.Valid;
@@ -25,5 +27,10 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<Map<String,String>> userRegister (@Valid @RequestBody UserRegistrationDto userDto) {
       return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("message",authService.userRegistration(userDto)));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<UserLoginResponseDto> userLogin(@Valid @RequestBody UserLoginDto userLoginDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(authService.userLoginService(userLoginDto));
     }
 }
