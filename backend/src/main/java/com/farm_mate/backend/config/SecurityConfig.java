@@ -29,7 +29,9 @@ public class SecurityConfig {
 
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
-                .authorizeHttpRequests(request-> request.requestMatchers(HttpMethod.POST,"/yield-prediction", "/disease-detection", "/auth/**").permitAll().anyRequest().authenticated())
+                .authorizeHttpRequests(request-> request.requestMatchers(HttpMethod.POST,"/yield-prediction", "/disease-detection", "/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/posts/get-posts", "/images/**").permitAll()
+                        .anyRequest().authenticated())
                 .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic(Customizer.withDefaults()).addFilterBefore(customJwtFilter, UsernamePasswordAuthenticationFilter.class);
 

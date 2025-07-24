@@ -1,11 +1,14 @@
 package com.farm_mate.backend.controllers;
 
 import com.farm_mate.backend.dto.PostDto;
+import com.farm_mate.backend.entities.PostEntity;
 import com.farm_mate.backend.services.PostService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/posts")
@@ -20,5 +23,10 @@ public class PostController {
     @PostMapping("/create")
     public ResponseEntity<String> addPost(@Valid @ModelAttribute PostDto postDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(postService.createPost(postDto));
+    }
+
+    @GetMapping("/get-posts")
+    public ResponseEntity<List<PostDto>> getAllPosts() {
+        return ResponseEntity.status(HttpStatus.OK).body(postService.getPosts());
     }
 }
