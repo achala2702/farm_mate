@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 import Button from "../button";
@@ -20,6 +20,22 @@ export type TDiscussion = {
   timeAgo: string;
 };
 
+export type TPost = {
+  postId: number;
+  title: string;
+  category: string;
+  content: String;
+  votes: number;
+  imageUrl: String;
+  postAuthor: {
+    authorId: number;
+    authorEmail: String;
+    authorFirstName: String;
+    authorLastName: String;
+  };
+  comments: [];
+};
+
 type DiscussionsProps = {
   discussions: TDiscussion[];
 };
@@ -29,8 +45,26 @@ const tabs = ["Trending", "Latest", "Most Popular"];
 export default function Discussions({ discussions }: DiscussionsProps) {
   const [activeTab, SetActiveTab] = useState("Trending");
   const router = useRouter();
+  const [posts, setPosts] = useState<TPost[]>([]);
+  const size = 5;
+  const page = 0;
 
-  const handleViewAllClick = () => {};
+  const fetchPosts = async () => {
+    const res = await fetch(
+      `http://localhost:8080/api/posts/get-posts?page=${page}&size=${size}`
+    );
+    const newPosts = await res.json();
+    setPosts((prev) => [...prev, ...newPosts]);
+    console.log(posts);
+  };
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
+  const handleViewAllClick = () => {
+    router.push("forum/posts");
+  };
 
   //navigate to an individual discussion
   const handleDiscussionClick = (discussionId: number) => {

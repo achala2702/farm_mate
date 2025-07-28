@@ -1,5 +1,6 @@
 package com.farm_mate.backend.services;
 
+import com.farm_mate.backend.dto.AddPostDto;
 import com.farm_mate.backend.dto.AuthorDto;
 import com.farm_mate.backend.dto.PostDto;
 import com.farm_mate.backend.entities.PostEntity;
@@ -10,6 +11,10 @@ import com.farm_mate.backend.repositories.UserRepository;
 import com.farm_mate.backend.utils.CurrentUserProvider;
 import com.farm_mate.backend.utils.PostMapper;
 import com.farm_mate.backend.utils.UserMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -36,7 +41,7 @@ public class PostService {
         this.userMapper = userMapper;
     }
 
-    public String createPost(PostDto postDto) {
+    public String createPost(AddPostDto postDto) {
         String currentUserEmail = CurrentUserProvider.getCurrentUsersEmail();
         String imageUrl = null;
 
@@ -70,8 +75,11 @@ public class PostService {
         return "post created";
     }
 
-    public List<PostDto> getPosts() {
-        List<PostEntity> postEntities = postRepository.findAll();
+    public List<PostDto> getPosts(int pageNumber, int size) {
+
+        Pageable pageable = PageRequest.of(pageNumber, size, Sort.by("createdAt").descending());
+        Page<PostEntity> postEntities = postRepository.findAll(pageable);
+
         List<PostDto> postDtos = new ArrayList<>();
         AuthorDto author;
         PostDto postDto;

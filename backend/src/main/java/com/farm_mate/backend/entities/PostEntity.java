@@ -2,6 +2,7 @@ package com.farm_mate.backend.entities;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class PostEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_author_id", nullable = false)
     private UserEntity postAuthor;
+    private final LocalDateTime createdAt = LocalDateTime.now();
 
     public void addComment(CommentEntity comment) {
         comments.add(comment);
@@ -93,5 +95,9 @@ public class PostEntity {
 
     public void setPostAuthor(UserEntity postAuthor) {
         this.postAuthor = postAuthor;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 }

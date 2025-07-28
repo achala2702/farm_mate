@@ -1,14 +1,14 @@
 package com.farm_mate.backend.utils;
 
+import com.farm_mate.backend.dto.AddPostDto;
 import com.farm_mate.backend.dto.AuthorDto;
 import com.farm_mate.backend.dto.PostDto;
 import com.farm_mate.backend.entities.PostEntity;
 import com.farm_mate.backend.entities.UserEntity;
-import org.springframework.web.multipart.MultipartFile;
 
 public class PostMapper {
 
-    public static PostEntity mapToPostEntity(PostDto postDto, UserEntity userEntity, String imageUrl) {
+    public static PostEntity mapToPostEntity(AddPostDto postDto, UserEntity userEntity, String imageUrl) {
         PostEntity postEntity = new PostEntity();
 
         postEntity.setPostAuthor(userEntity);
@@ -23,15 +23,7 @@ public class PostMapper {
     //map post entity to postDto
     public static PostDto mapToPostDto(PostEntity postEntity, AuthorDto authorDto, String imageUrl) {
 
-        PostDto postDto = new PostDto();
-
-        postDto.setTitle(postEntity.getTitle());
-        postDto.setCategory(postEntity.getCategory());
-        postDto.setContent(postEntity.getContent());
-        postDto.setImageUrl(imageUrl);
-        postDto.setPostAuthor(authorDto);
-        postDto.setVotes(postEntity.getVotes());
-        postDto.setComments(postEntity.getComments());
+        PostDto postDto = new PostDto(postEntity.getId(), postEntity.getTitle(), postEntity.getCategory(), postEntity.getContent(), postEntity.getVotes(), imageUrl, authorDto, postEntity.getComments());
 
         return postDto;
     }
