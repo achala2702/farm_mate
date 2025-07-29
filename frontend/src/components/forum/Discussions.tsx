@@ -1,66 +1,28 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-
+import { useQuery } from "@tanstack/react-query"; 
 import Button from "../button";
 import DiscussionCard from "./DiscussionCard";
-
-export type TDiscussion = {
-  id: number;
-  title: string;
-  preview: string;
-  author: {
-    name: string;
-    avatar: string;
-  };
-  category: string;
-  votes: number;
-  comments: number;
-  timeAgo: string;
-};
-
-export type TPost = {
-  postId: number;
-  title: string;
-  category: string;
-  content: String;
-  votes: number;
-  imageUrl: String;
-  postAuthor: {
-    authorId: number;
-    authorEmail: String;
-    authorFirstName: String;
-    authorLastName: String;
-  };
-  comments: [];
-};
-
-type DiscussionsProps = {
-  discussions: TDiscussion[];
-};
+import GetPosts from "@/api/GetPosts";
+import type { TPost } from "@/api/GetPosts";
 
 const tabs = ["Trending", "Latest", "Most Popular"];
 
-export default function Discussions({ discussions }: DiscussionsProps) {
+export default function Discussions() {
   const [activeTab, SetActiveTab] = useState("Trending");
   const router = useRouter();
-  const [posts, setPosts] = useState<TPost[]>([]);
   const size = 5;
   const page = 0;
 
-  const fetchPosts = async () => {
-    const res = await fetch(
-      `http://localhost:8080/api/posts/get-posts?page=${page}&size=${size}`
-    );
-    const newPosts = await res.json();
-    setPosts((prev) => [...prev, ...newPosts]);
-    console.log(posts);
-  };
-
-  useEffect(() => {
-    fetchPosts();
-  }, []);
+  const {data, isLoading, error} = useQuery<TPost[]>({
+    queryKey:["posts", page, size],
+    queryFn: ({queryKey})=>{
+      const [_key, page, size] = queryKey;
+      return GetPosts(page as number, size as  number);
+    }
+  });
 
   const handleViewAllClick = () => {
     router.push("forum/posts");
@@ -96,10 +58,10 @@ export default function Discussions({ discussions }: DiscussionsProps) {
         ))}
       </div>
       <div className="flex flex-col gap-4 mt-6">
-        {discussions.map((discussion) => (
+        {data?.map((discussion) => (
           <DiscussionCard
-            key={discussion.id}
-            onDiscussionClick={() => handleDiscussionClick(discussion.id)}
+            key={discussion.postId}
+            onDiscussionClick={() => handleDiscussionClick(discussion.postId)}
             discussion={discussion}
           />
         ))}

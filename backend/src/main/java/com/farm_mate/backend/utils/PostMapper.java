@@ -23,8 +23,6 @@ public class PostMapper {
     //map post entity to postDto
     public static PostDto mapToPostDto(PostEntity postEntity, AuthorDto authorDto, String imageUrl) {
 
-        PostDto postDto = new PostDto(postEntity.getId(), postEntity.getTitle(), postEntity.getCategory(), postEntity.getContent(), postEntity.getVotes(), imageUrl, authorDto, postEntity.getComments());
-
-        return postDto;
+        return new PostDto(postEntity.getId(), postEntity.getTitle(), postEntity.getCategory(), postEntity.getContent(), postEntity.getVotes(), imageUrl, authorDto, postEntity.getComments(), postEntity.getCreatedAt());
     }
 }

@@ -2,6 +2,7 @@ package com.farm_mate.backend.dto;
 
 import com.farm_mate.backend.entities.CommentEntity;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class PostDto {
@@ -14,8 +15,9 @@ public class PostDto {
     private final String imageUrl;
     private final AuthorDto postAuthor;
     private final List<CommentEntity> comments;
+    private final LocalDateTime createdAt;
 
-    public PostDto(Integer postId, String title, String category, String content, Integer votes, String imageUrl, AuthorDto postAuthor, List<CommentEntity> comments) {
+    public PostDto(Integer postId, String title, String category, String content, Integer votes, String imageUrl, AuthorDto postAuthor, List<CommentEntity> comments, LocalDateTime createdAt) {
         this.postId = postId;
         this.title = title;
         this.category = category;
@@ -24,6 +26,7 @@ public class PostDto {
         this.imageUrl = imageUrl;
         this.postAuthor = postAuthor;
         this.comments = comments;
+        this.createdAt = createdAt;
     }
 
     public Integer getPostId() {
@@ -56,5 +59,9 @@ public class PostDto {
 
     public List<CommentEntity> getComments() {
         return comments;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 }
