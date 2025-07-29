@@ -4,6 +4,7 @@ import com.farm_mate.backend.dto.UserLoginDto;
 import com.farm_mate.backend.dto.UserLoginResponseDto;
 import com.farm_mate.backend.dto.UserRegistrationDto;
 import com.farm_mate.backend.services.AuthService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserLoginResponseDto> userLogin(@Valid @RequestBody UserLoginDto userLoginDto) {
-        return ResponseEntity.status(HttpStatus.OK).body(authService.userLoginService(userLoginDto));
+    public ResponseEntity<UserLoginResponseDto> userLogin(@Valid @RequestBody UserLoginDto userLoginDto, HttpServletResponse response) {
+        return ResponseEntity.status(HttpStatus.OK).body(authService.userLoginService(userLoginDto, response));
     }
 }

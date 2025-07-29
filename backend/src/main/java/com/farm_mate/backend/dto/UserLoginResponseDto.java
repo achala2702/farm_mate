@@ -5,13 +5,11 @@ public class UserLoginResponseDto {
     private String email;
     private String firstName;
     private String lastName;
-    private String token;
 
-    public UserLoginResponseDto(String email, String firstName, String lastName, String token) {
+    public UserLoginResponseDto(String email, String firstName, String lastName) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.token = token;
     }
 
     public String getEmail() {
@@ -36,13 +34,5 @@ public class UserLoginResponseDto {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 }

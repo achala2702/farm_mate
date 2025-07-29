@@ -20,8 +20,8 @@ export default function LoginForm() {
     if (!state?.success) {
       setError(state?.error);
     } else {
-      localStorage.setItem("farm_mate_token", state.data.token);
 
+      //make user data acess goblaly
       dispatch(
         setLoginData({
           email: state.data.email,
