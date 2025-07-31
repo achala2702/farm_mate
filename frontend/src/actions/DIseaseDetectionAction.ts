@@ -13,7 +13,7 @@ export default async function DiseaseDetection(
   formData: FormData
 ): Promise<DiseaseDetectionResult> {
   try {
-    const res = await fetch(`${process.env.BACKEND_URL}/disease-detection`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/disease-detection`, {
       method: "POST",
       body: formData,
     });

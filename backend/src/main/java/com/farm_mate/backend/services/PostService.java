@@ -26,6 +26,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -41,7 +42,7 @@ public class PostService {
         this.userMapper = userMapper;
     }
 
-    public String createPost(AddPostDto postDto) {
+    public Map<String, String> createPost(AddPostDto postDto) {
         String currentUserEmail = CurrentUserProvider.getCurrentUsersEmail();
         String imageUrl = null;
 
@@ -72,7 +73,7 @@ public class PostService {
         UserEntity postAuthor = userRepository.findByEmail(currentUserEmail).orElseThrow(()->new UserNotFoundException("No account found with the provided email address."));
         PostEntity post = PostMapper.mapToPostEntity(postDto, postAuthor,imageUrl);
         postRepository.save(post);
-        return "post created";
+        return Map.of("message", "post created");
     }
 
     public List<PostDto> getPosts(int pageNumber, int size) {

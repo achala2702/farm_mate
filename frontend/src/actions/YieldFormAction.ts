@@ -25,7 +25,7 @@ export async function yieldPrediction(
       season: formData.get("season")?.toString() || "",
     };
 
-    const res = await fetch(`${process.env.BACKEND_URL}/yield-prediction`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/yield-prediction`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

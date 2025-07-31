@@ -1,26 +1,34 @@
 "use client";
 
-import React, { useActionState, useEffect } from "react";
+import React, { useState } from "react";
 import Button from "../button";
 import Link from "next/link";
-import { userLogin } from "@/actions/AuthActions";
 import useErrorHandler from "@/hooks/useErrorHandler";
 import { useDispatch } from "react-redux";
 import { setLoginData } from "@/redux/slices/AuthenticationSlice";
 import type { AppDispatch } from "@/redux/store";
 import { useRouter } from "next/navigation";
+import userLogin from "@/api/UserLogin";
 
 export default function LoginForm() {
-  const [state, action, isPending] = useActionState(userLogin, null);
   const { error, setError } = useErrorHandler();
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
+  const [isPending, setIsPending] = useState(false);
 
-  useEffect(() => {
+  const handleLoginForm = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsPending(true);
+
+    const form = e.currentTarget as HTMLFormElement;
+    const formData = new FormData(form);
+
+    const state = await userLogin(formData);
+
     if (!state?.success) {
       setError(state?.error);
+      setIsPending(false);
     } else {
-
       //make user data acess goblaly
       dispatch(
         setLoginData({
@@ -30,10 +38,10 @@ export default function LoginForm() {
         })
       );
 
+      setIsPending(false);
       router.push("/forum");
     }
-  }, [state]);
-
+  };
   const handleLoginGoogle = () => {};
   const handleLoginFacebook = () => {};
 
@@ -47,7 +55,7 @@ export default function LoginForm() {
       </div>
 
       <form
-        action={action}
+        onSubmit={handleLoginForm}
         className="flex flex-col justify-center items-center gap-4 w-full"
       >
         <input

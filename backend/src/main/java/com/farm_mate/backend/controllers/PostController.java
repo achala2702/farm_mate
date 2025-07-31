@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/posts")
@@ -21,7 +22,7 @@ public class PostController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> addPost(@Valid @ModelAttribute AddPostDto postDto) {
+    public ResponseEntity<Map<String, String>> addPost(@Valid @ModelAttribute AddPostDto postDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(postService.createPost(postDto));
     }
 
