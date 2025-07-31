@@ -30,4 +30,9 @@ public class PostController {
     public ResponseEntity<List<PostDto>> getAllPosts(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
         return ResponseEntity.status(HttpStatus.OK).body(postService.getPosts(page, size));
     }
+
+    @GetMapping("/get-post/{id}")
+    public ResponseEntity<PostDto> getPostById(@PathVariable Integer id){
+        return ResponseEntity.status(HttpStatus.OK).body(postService.getPostById(id));
+    }
 }

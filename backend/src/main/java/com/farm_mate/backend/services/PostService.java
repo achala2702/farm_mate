@@ -5,6 +5,7 @@ import com.farm_mate.backend.dto.AuthorDto;
 import com.farm_mate.backend.dto.PostDto;
 import com.farm_mate.backend.entities.PostEntity;
 import com.farm_mate.backend.entities.UserEntity;
+import com.farm_mate.backend.exceptions.PostNotFoundException;
 import com.farm_mate.backend.exceptions.UserNotFoundException;
 import com.farm_mate.backend.repositories.PostRepository;
 import com.farm_mate.backend.repositories.UserRepository;
@@ -102,5 +103,20 @@ public class PostService {
         }
 
         return postDtos;
+    }
+
+    public PostDto getPostById(Integer id) {
+
+        PostEntity post  = postRepository.findById(id).orElseThrow(()->new PostNotFoundException("the post related to this id is not found"));
+        AuthorDto author = userMapper.mapToAuthorDto(post.getPostAuthor());
+
+        String baseUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toString();
+        String imageUri = null;
+
+        if(post.getImage()!= null) {
+            imageUri = baseUrl + "/images/" + Paths.get(post.getImage()).getFileName().toString();
+        }
+
+        return PostMapper.mapToPostDto(post, author, imageUri);
     }
 }
