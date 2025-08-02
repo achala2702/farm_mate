@@ -1,61 +1,26 @@
 "use client";
 
 import RootLayout from "@/layouts/RootLayout";
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import DiscussionCard from "@/components/forum/DiscussionCard";
-import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import GetPosts from "@/api/GetPosts";
 import type { TData } from "@/api/GetPosts";
 
 export default function AllPosts() {
   const router = useRouter();
-  // const [posts, setPosts] = useState<TPost[]>([]);
-  const [page, setPage] = useState(0);
-  const [hasMore, setHasMore] = useState(true);
   const size = 5;
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
-  const { data, isLoading, error } = useQuery<TData>({
-    queryKey: ["posts", page, size],
-    queryFn: ({ queryKey }) => {
-      const [_key, page, size] = queryKey;
-      return GetPosts(page as number, size as number);
-    },
-  });
-
-  console.log(data);
-
-  // const fetchPosts = async () => {
-  //   const res = await fetch(
-  //     `http://localhost:8080/api/posts/get-posts?page=${page}&size=${size}`
-  //   );
-  //   const newPosts = await res.json();
-  //   if (newPosts.length < size) {
-  //     setHasMore(false);
-  //   }
-  //   setPosts((prev) => [...prev, ...newPosts]);
-  //   console.log(posts);
-  // };
-
-  // useEffect(() => {
-  //   fetchPosts();
-  // }, [page]);
-
-  // const handleScroll = () => {
-  //   if (
-  //     window.innerHeight + document.documentElement.scrollTop + 100 >=
-  //     document.documentElement.offsetHeight
-  //   ) {
-  //     if (hasMore) {
-  //       setPage((prev) => prev + 1);
-  //     }
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => window.removeEventListener("scroll", handleScroll);
-  // }, [hasMore]);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery<TData>({
+      queryKey: ["posts"],
+      queryFn: ({ pageParam = 0 }) => GetPosts(pageParam as number, size),
+      getNextPageParam: (lastPage) =>
+        lastPage.hasNextPage ? lastPage.nextPage : undefined,
+      initialPageParam: 0,
+    });
 
   //navigate to an individual discussion
   const handleDiscussionClick = (discussionId: number) => {
@@ -64,15 +29,41 @@ export default function AllPosts() {
     }, 200);
   };
 
+  useEffect(() => {
+    if (!hasNextPage || isFetchingNextPage) return;
+
+    //observer to watch and fetch next page
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        fetchNextPage();
+      }
+    });
+
+    //calling the observer
+    if (loadMoreRef.current) {
+      observer.observe(loadMoreRef.current);
+    }
+
+    return () => {
+      if (loadMoreRef.current) {
+        observer.unobserve(loadMoreRef.current);
+      }
+    };
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+
   return (
     <RootLayout className="flex flex-col gap-4 mt-6">
-      {data?.posts.map((discussion) => (
-        <DiscussionCard
-          key={discussion.postId}
-          onDiscussionClick={() => handleDiscussionClick(discussion.postId)}
-          discussion={discussion}
-        />
-      ))}
+      {data?.pages.map((page) =>
+        page.posts.map((discussion) => (
+          <DiscussionCard
+            key={discussion.postId}
+            onDiscussionClick={() => handleDiscussionClick(discussion.postId)}
+            discussion={discussion}
+          />
+        ))
+      )}
+      <div ref={loadMoreRef} className="h-10" />
+      {isFetchingNextPage && <p className="text-center">Loading more...</p>}
     </RootLayout>
   );
 }
