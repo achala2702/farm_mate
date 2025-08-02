@@ -2,35 +2,28 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-
+import { useQuery } from "@tanstack/react-query"; 
 import Button from "../button";
 import DiscussionCard from "./DiscussionCard";
-
-export type TDiscussion = {
-  id: number;
-  title: string;
-  preview: string;
-  author: {
-    name: string;
-    avatar: string;
-  };
-  category: string;
-  votes: number;
-  comments: number;
-  timeAgo: string;
-};
-
-type DiscussionsProps = {
-  discussions: TDiscussion[];
-};
+import GetPosts from "@/api/GetPosts";
+import type { TData } from "@/api/GetPosts";
 
 const tabs = ["Trending", "Latest", "Most Popular"];
 
-export default function Discussions({ discussions }: DiscussionsProps) {
+export default function Discussions() {
   const [activeTab, SetActiveTab] = useState("Trending");
   const router = useRouter();
+  const size = 5;
+  const page = 0;
 
-  const handleViewAllClick = () => {};
+  const {data, isLoading, error} = useQuery<TData>({
+    queryKey:["posts", page],
+    queryFn: ()=> GetPosts(page, size)
+  });
+
+  const handleViewAllClick = () => {
+    router.push("forum/posts");
+  };
 
   //navigate to an individual discussion
   const handleDiscussionClick = (discussionId: number) => {
@@ -62,10 +55,10 @@ export default function Discussions({ discussions }: DiscussionsProps) {
         ))}
       </div>
       <div className="flex flex-col gap-4 mt-6">
-        {discussions.map((discussion) => (
+        {data?.posts.map((discussion) => (
           <DiscussionCard
-            key={discussion.id}
-            onDiscussionClick={() => handleDiscussionClick(discussion.id)}
+            key={discussion.postId}
+            onDiscussionClick={() => handleDiscussionClick(discussion.postId)}
             discussion={discussion}
           />
         ))}

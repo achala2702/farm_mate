@@ -9,7 +9,12 @@ import com.farm_mate.backend.exceptions.UserNotFoundException;
 import com.farm_mate.backend.repositories.UserRepository;
 import com.farm_mate.backend.utils.JwtUtil;
 import com.farm_mate.backend.utils.UserMapper;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Service;
+
+import java.time.Duration;
 
 @Service
 public class AuthService {
@@ -40,7 +45,7 @@ public class AuthService {
         }
     }
 
-    public UserLoginResponseDto userLoginService(UserLoginDto userLoginDto) {
+    public UserLoginResponseDto userLoginService(UserLoginDto userLoginDto, HttpServletResponse response) {
 
         //checking and getting user details from db
         UserEntity user = userRepository.findByEmail(userLoginDto.getEmail()).orElseThrow(()-> new UserNotFoundException("No account found with the provided email address."));
@@ -48,7 +53,19 @@ public class AuthService {
         //generating a token if user found in db
         String token = jwtUtil.generateJwt(userLoginDto);
 
+        //creating a http only cookie
+        ResponseCookie cookie = ResponseCookie.from("jwt", token)
+                .httpOnly(true)
+                .secure(false)
+                .path("/")
+                .maxAge(Duration.ofHours(1))
+                .sameSite("Lax")
+                .build();
+
+        //adding the cookie to response
+        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+
         //returning user response with all details
-        return new UserLoginResponseDto(user.getEmail(), user.getFirstName(), user.getLastName(), token);
+        return new UserLoginResponseDto(user.getEmail(), user.getFirstName(), user.getLastName());
     }
 }

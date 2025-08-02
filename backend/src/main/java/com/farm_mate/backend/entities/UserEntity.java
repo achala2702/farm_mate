@@ -2,6 +2,9 @@ package com.farm_mate.backend.entities;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "user_table")
 public class UserEntity{
@@ -17,6 +20,24 @@ public class UserEntity{
     private String firstName;
     @Column(nullable = false)
     private String lastName;
+    @OneToMany(mappedBy = "postAuthor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<PostEntity> posts = new ArrayList<>();
+
+    //adding new post with author
+    public void addPost(PostEntity post) {
+        posts.add(post);
+        post.setPostAuthor(this);
+    }
+
+    //removing posts and author
+    public void removePost(PostEntity post) {
+        posts.remove(post);
+        post.setPostAuthor(null);
+    }
+
+    public List<PostEntity> getPosts() {
+        return posts;
+    }
 
     public String getPassword() {
         return password;

@@ -6,6 +6,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,9 +20,6 @@ import java.util.Collections;
 @Component
 public class CustomJwtFilter extends OncePerRequestFilter {
 
-    private static final String AUTH_HEADER = "Authorization";
-    private static final String BEARER = "Bearer ";
-
     private final JwtUtil jwtUtil;
 
     public CustomJwtFilter(JwtUtil jwtUtil) {
@@ -32,21 +30,26 @@ public class CustomJwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         try{
-            final String authHeader = request.getHeader(AUTH_HEADER);
-            String jwt;
-
-            if(authHeader != null && authHeader.startsWith(BEARER)){
+            String jwt=null;
+            Cookie[] cookies = request.getCookies();
+            if(cookies != null){
                 //getting jwt
-                jwt = authHeader.substring(BEARER.length());
+                for(Cookie cookie: cookies) {
+                    if(cookie.getName().equals("jwt")) {
+                        jwt = cookie.getValue();
+                        break;
+                    }
+                }
 
                 //validate and getting claims from token
-                Claims claims = jwtUtil.validateJwt(jwt);
+                if(jwt != null) {
+                    Claims claims = jwtUtil.validateJwt(jwt);
 
-                //create an authentication token with the email in token
-                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(claims.getSubject(), null, Collections.emptyList());
-
-                //set the authentication for current request so it can pass security
-                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+                    //create an authentication token with the email in token
+                    UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(claims.getSubject(), null, Collections.emptyList());
+                    //set the authentication for current request so it can pass security
+                    SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+                }
             }
             filterChain.doFilter(request, response);
 

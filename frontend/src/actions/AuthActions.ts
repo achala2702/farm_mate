@@ -16,7 +16,7 @@ export async function userRegister(
       lastName: formData.get("lastName")?.toString(),
     };
 
-    const res = await fetch(`${process.env.BACKEND_URL}/auth/register`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -39,6 +39,7 @@ export async function userRegister(
   }
 }
 
+//not using
 export async function userLogin(
   prevState: UserAuth | null,
   formData: FormData
@@ -49,8 +50,9 @@ export async function userLogin(
       password: formData.get("password")?.toString(),
     };
 
-    const res = await fetch(`${process.env.BACKEND_URL}/auth/login`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`, {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -65,6 +67,7 @@ export async function userLogin(
 
     return { success: true, data: data };
   } catch (error) {
+    console.log(error)
     return { success: false, error: "Please try again later!" };
   }
 }

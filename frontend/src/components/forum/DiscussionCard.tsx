@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { TDiscussion } from "./Discussions";
 import { Icon } from "@iconify/react";
+import { TPost } from "@/api/GetPosts";
+import FormatTimesAgo from "@/utils/FormateTimesAgo";
 
 type DiscussionProps = {
-  discussion: TDiscussion;
+  discussion: TPost;
   onDiscussionClick: () => void;
 };
 
@@ -20,7 +21,7 @@ export default function DiscussionCard({
     e.stopPropagation(); //prevent card click navigation
 
     setVotes((prev) => prev + 1);
-    
+
     //backend update logic
   };
 
@@ -44,17 +45,22 @@ export default function DiscussionCard({
           <h1 className="font-bold text-base md:text-lg lg:text-xl">
             {discussion.title}
           </h1>
-          <p className="text-sm md:text-base">{discussion.preview}</p>
+          <p className="text-sm md:text-base">{discussion.content}</p>
         </div>
         <div className=" flex items-center justify-between">
           <div className=" flex gap-2 items-center justify-center">
             <img
-              src={discussion.author.avatar}
+              src={"/images/person.png"}
               className="rounded-full w-6 h-6 object-cover"
             />
             <p className="md:text-sm text-xs">
-              Posted by <strong>{discussion.author.name}</strong>:{" "}
-              {discussion.timeAgo}
+              Posted by{" "}
+              <strong>
+                {discussion.postAuthor.authorFirstName +
+                  " " +
+                  discussion.postAuthor.authorLastName}
+              </strong>
+              : {FormatTimesAgo(new Date(discussion.createdAt))}
             </p>
           </div>
           <div className="flex gap-2 items-center">
@@ -63,7 +69,9 @@ export default function DiscussionCard({
                 icon="fluent:comment-32-regular"
                 className="w-4 h-4 md:w-5 md:h-5"
               />
-              <p className="text-sm md:text-base">{discussion.comments}</p>
+              <p className="text-sm md:text-base">
+                {discussion.comments.length}
+              </p>
             </div>
             <Icon icon="meteor-icons:share" className="w-4 h-4 md:w-5 md:h-5" />
           </div>

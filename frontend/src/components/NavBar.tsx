@@ -36,6 +36,13 @@ const NavBar: React.FC<NavBarProps> = ({ isOpen }) => {
         screenWidth >= 1280 || isOpen ? "translate-x-0" : "-translate-x-full"
       }`}
     >
+      <Link
+        className="bg-primaryGreen p-4 mb-4 rounded-lg font-bold flex items-center justify-center gap-1 opacity-100 hover:opacity-90 active:scale-95"
+        href={"/forum/create-post"}
+      >
+        <Icon icon="ic:round-add" width="20" height="20" />
+        <p>Start a Discussion</p>
+      </Link>
       <p className="font-semibold mx-5">Navigation</p>
       <nav className="flex mt-2 flex-col gap-2">
         {navItems.map((item) => (

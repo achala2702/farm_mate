@@ -2,20 +2,8 @@
 
 import { Icon } from "@iconify/react";
 import Button from "../button";
-
-export type TPost = {
-  id: number;
-  title: string;
-  content: string;
-  author: {
-    name: string;
-    avatar: string;
-  };
-  category: string;
-  votes: number;
-  timeAgo: string;
-  imageSrc: string;
-};
+import type {TPost} from "@/api/GetPosts";
+import FormatTimesAgo from "@/utils/FormateTimesAgo";
 
 type PostSectionProps = {
   post: TPost;
@@ -34,17 +22,17 @@ export default function PostSection({ post }: PostSectionProps) {
           </h1>
           <div className=" flex gap-2 items-center">
             <img
-              src={post.author.avatar}
+              src={"/images/person.png"}
               className="rounded-full w-10 h-10 object-cover"
             />
             <div>
-              <p className="md:text-base text-sm">{post.author.name}</p>
-              <p className="md:text-sm text-xs">{post.timeAgo}</p>
+              <p className="md:text-base text-sm">{post.postAuthor.authorFirstName + post.postAuthor.authorLastName}</p>
+              <p className="md:text-sm text-xs">{FormatTimesAgo(new Date(post.createdAt))}</p>
             </div>
           </div>
           <p className="text-sm md:text-base">{post.content}</p>
           <img
-            src={post.imageSrc}
+            src={post.imageUrl}
             alt="post-img"
             className="object-cover rounded-2xl w-4/5 mx-auto my-2"
           />

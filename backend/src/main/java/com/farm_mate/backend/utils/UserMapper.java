@@ -1,5 +1,6 @@
 package com.farm_mate.backend.utils;
 
+import com.farm_mate.backend.dto.AuthorDto;
 import com.farm_mate.backend.dto.UserRegistrationDto;
 import com.farm_mate.backend.entities.UserEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,5 +24,10 @@ public class UserMapper {
         userEntity.setLastName(userRegistrationDto.getLastName());
 
         return userEntity;
+    }
+
+    //map user entity to author dto
+    public AuthorDto mapToAuthorDto(UserEntity userEntity) {
+        return new AuthorDto(userEntity.getId(), userEntity.getEmail(), userEntity.getFirstName(), userEntity.getLastName());
     }
 }
