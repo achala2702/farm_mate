@@ -1,6 +1,7 @@
 package com.farm_mate.backend.controllers;
 
 import com.farm_mate.backend.dto.AddPostDto;
+import com.farm_mate.backend.dto.GetPostsResponseDto;
 import com.farm_mate.backend.dto.PostDto;
 import com.farm_mate.backend.services.PostService;
 import jakarta.validation.Valid;
@@ -27,7 +28,7 @@ public class PostController {
     }
 
     @GetMapping("/get-posts")
-    public ResponseEntity<List<PostDto>> getAllPosts(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
+    public ResponseEntity<GetPostsResponseDto> getAllPosts(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
         return ResponseEntity.status(HttpStatus.OK).body(postService.getPosts(page, size));
     }
 

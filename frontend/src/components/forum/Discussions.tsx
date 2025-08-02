@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import Button from "../button";
 import DiscussionCard from "./DiscussionCard";
 import GetPosts from "@/api/GetPosts";
-import type { TPost } from "@/api/GetPosts";
+import type { TData } from "@/api/GetPosts";
 
 const tabs = ["Trending", "Latest", "Most Popular"];
 
@@ -16,12 +16,9 @@ export default function Discussions() {
   const size = 5;
   const page = 0;
 
-  const {data, isLoading, error} = useQuery<TPost[]>({
-    queryKey:["posts", page, size],
-    queryFn: ({queryKey})=>{
-      const [_key, page, size] = queryKey;
-      return GetPosts(page as number, size as  number);
-    }
+  const {data, isLoading, error} = useQuery<TData>({
+    queryKey:["posts", page],
+    queryFn: ()=> GetPosts(page, size)
   });
 
   const handleViewAllClick = () => {
@@ -58,7 +55,7 @@ export default function Discussions() {
         ))}
       </div>
       <div className="flex flex-col gap-4 mt-6">
-        {data?.map((discussion) => (
+        {data?.posts.map((discussion) => (
           <DiscussionCard
             key={discussion.postId}
             onDiscussionClick={() => handleDiscussionClick(discussion.postId)}

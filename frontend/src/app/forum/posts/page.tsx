@@ -4,9 +4,9 @@ import RootLayout from "@/layouts/RootLayout";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import DiscussionCard from "@/components/forum/DiscussionCard";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
 import GetPosts from "@/api/GetPosts";
-import type { TPost } from "@/api/GetPosts";
+import type { TData } from "@/api/GetPosts";
 
 export default function AllPosts() {
   const router = useRouter();
@@ -15,13 +15,15 @@ export default function AllPosts() {
   const [hasMore, setHasMore] = useState(true);
   const size = 5;
 
-    const {data, isLoading, error} = useQuery<TPost[]>({
-      queryKey:["posts", page, size],
-      queryFn: ({queryKey})=>{
-        const [_key, page, size] = queryKey;
-        return GetPosts(page as number, size as  number);
-      }
-    });
+  const { data, isLoading, error } = useQuery<TData>({
+    queryKey: ["posts", page, size],
+    queryFn: ({ queryKey }) => {
+      const [_key, page, size] = queryKey;
+      return GetPosts(page as number, size as number);
+    },
+  });
+
+  console.log(data);
 
   // const fetchPosts = async () => {
   //   const res = await fetch(
@@ -64,7 +66,7 @@ export default function AllPosts() {
 
   return (
     <RootLayout className="flex flex-col gap-4 mt-6">
-      {data?.map((discussion) => (
+      {data?.posts.map((discussion) => (
         <DiscussionCard
           key={discussion.postId}
           onDiscussionClick={() => handleDiscussionClick(discussion.postId)}

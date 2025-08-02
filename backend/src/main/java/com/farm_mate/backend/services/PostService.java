@@ -2,6 +2,7 @@ package com.farm_mate.backend.services;
 
 import com.farm_mate.backend.dto.AddPostDto;
 import com.farm_mate.backend.dto.AuthorDto;
+import com.farm_mate.backend.dto.GetPostsResponseDto;
 import com.farm_mate.backend.dto.PostDto;
 import com.farm_mate.backend.entities.PostEntity;
 import com.farm_mate.backend.entities.UserEntity;
@@ -77,33 +78,28 @@ public class PostService {
         return Map.of("message", "post created");
     }
 
-    public List<PostDto> getPosts(int pageNumber, int size) {
-
+    public GetPostsResponseDto getPosts(int pageNumber, int size) {
         Pageable pageable = PageRequest.of(pageNumber, size, Sort.by("createdAt").descending());
         Page<PostEntity> postEntities = postRepository.findAll(pageable);
 
         List<PostDto> postDtos = new ArrayList<>();
-        AuthorDto author;
-        PostDto postDto;
         String baseUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toString();
-        String uniqueImageName;
 
-        for(PostEntity post : postEntities) {
-            String imageUrl=null;
-            author = userMapper.mapToAuthorDto(post.getPostAuthor());
-
-            if(post.getImage()!=null){
-                uniqueImageName = Paths.get(post.getImage()).getFileName().toString();
+        for (PostEntity post : postEntities) {
+            String imageUrl = null;
+            if (post.getImage() != null) {
+                String uniqueImageName = Paths.get(post.getImage()).getFileName().toString();
                 imageUrl = baseUrl + "/images/" + uniqueImageName;
             }
 
-            postDto = PostMapper.mapToPostDto(post, author, imageUrl);
-
+            AuthorDto author = userMapper.mapToAuthorDto(post.getPostAuthor());
+            PostDto postDto = PostMapper.mapToPostDto(post, author, imageUrl);
             postDtos.add(postDto);
         }
 
-        return postDtos;
+        return new GetPostsResponseDto(postDtos, pageNumber, postEntities.hasNext(), postEntities.hasNext()? pageNumber+1 : pageNumber);
     }
+
 
     public PostDto getPostById(Integer id) {
 

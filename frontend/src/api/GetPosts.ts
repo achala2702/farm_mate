@@ -15,7 +15,14 @@ export interface TPost {
   createdAt:string
 }
 
-export default async function GetPosts(page: number, size: number):Promise<TPost[]> {
+export type TData = {
+  posts: TPost[];
+  currentPage: number;
+  hasNextPage: boolean;
+  nextPage: number;
+}
+
+export default async function GetPosts(page: number, size: number):Promise<TData> {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}/posts/get-posts?page=${page}&size=${size}`
   );
