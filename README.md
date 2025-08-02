@@ -16,7 +16,7 @@ This is an ongoing project. Currently:
 
 - ✅ The **Machine Learning backend (Flask)** is fully functional.
 - ✅ The **frontend (Next.js)** and **backend (Spring Boot)** are set up and integrated with the ML module.
-- ⚠️ Other features like **community forum**, **user profiles**, **user authentication**, and additional routes are still under development.
+- ⚠️ Other features like **voting, commenting in community forum**, **user profiles**, and additional routes are still under development.
 
 ---
 
