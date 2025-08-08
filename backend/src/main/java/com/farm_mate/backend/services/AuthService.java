@@ -51,7 +51,7 @@ public class AuthService {
         UserEntity user = userRepository.findByEmail(userLoginDto.getEmail()).orElseThrow(()-> new UserNotFoundException("No account found with the provided email address."));
 
         //generating a token if user found in db
-        String token = jwtUtil.generateJwt(userLoginDto);
+        String token = jwtUtil.generateJwt(userLoginDto.getEmail());
 
         //creating a http only cookie
         ResponseCookie cookie = ResponseCookie.from("jwt", token)
