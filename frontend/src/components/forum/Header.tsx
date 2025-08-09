@@ -4,13 +4,35 @@ import React from "react";
 import SearchInput from "../SearchInput";
 import Button from "../button";
 import useScreenWidth from "@/hooks/useScreenWidth";
+import { GetUserInfo } from "@/api/GetUserInfo";
+import { useSelector } from "react-redux";
+import type { RootState, AppDispatch } from "@/redux/store";
+import { useDispatch } from "react-redux";
+import { setLoginData } from "@/redux/slices/AuthenticationSlice";
 
 export default function Header() {
   const screenWidth = useScreenWidth();
+  const user = useSelector((state: RootState) => state.userAuthentication.data);
+  const dispatch = useDispatch<AppDispatch>();
 
-  const searchFunction = ()=>{
-    
+  const getUser = async () => {
+    const data = await GetUserInfo();
+    if (data) {
+      dispatch(
+        setLoginData({
+          email: data.email,
+          firstName: data.firstName,
+          lastName: data.lastName,
+        })
+      );
+    }
+  };
+
+  if (!user) {
+    getUser();
   }
+
+  const searchFunction = () => {};
 
   return (
     <div className="bg-primaryGreen text-[#f8fbe7] flex flex-col items-center justify-center py-6 gap-4 rounded-xl">

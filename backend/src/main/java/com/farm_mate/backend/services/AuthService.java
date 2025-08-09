@@ -7,6 +7,7 @@ import com.farm_mate.backend.entities.UserEntity;
 import com.farm_mate.backend.exceptions.UserAlreadyExistsException;
 import com.farm_mate.backend.exceptions.UserNotFoundException;
 import com.farm_mate.backend.repositories.UserRepository;
+import com.farm_mate.backend.utils.CurrentUserProvider;
 import com.farm_mate.backend.utils.JwtUtil;
 import com.farm_mate.backend.utils.UserMapper;
 import jakarta.servlet.http.HttpServletResponse;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.util.Optional;
 
 @Service
 public class AuthService {
@@ -51,9 +53,9 @@ public class AuthService {
         UserEntity user = userRepository.findByEmail(userLoginDto.getEmail()).orElseThrow(()-> new UserNotFoundException("No account found with the provided email address."));
 
         //generating a token if user found in db
-        String token = jwtUtil.generateJwt(userLoginDto);
+        String token = jwtUtil.generateJwt(userLoginDto.getEmail());
 
-        //creating a http only cookie
+        //creating an http only cookie
         ResponseCookie cookie = ResponseCookie.from("jwt", token)
                 .httpOnly(true)
                 .secure(false)
@@ -66,6 +68,27 @@ public class AuthService {
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
         //returning user response with all details
+        return new UserLoginResponseDto(user.getEmail(), user.getFirstName(), user.getLastName());
+    }
+
+    public String userLogoutService(HttpServletResponse response) {
+        response.addHeader(HttpHeaders.SET_COOKIE, ResponseCookie.from("jwt", "")
+                        .httpOnly(true)
+                        .secure(false)
+                        .path("/")
+                        .maxAge(0)
+                .build().toString()
+        );
+        return "User Log out successfully!";
+    }
+
+    public UserLoginResponseDto getUserInfoService() {
+        String email = CurrentUserProvider.getCurrentUsersEmail();
+        Optional<UserEntity> userOpt = userRepository.findByEmail(email);
+        if (userOpt.isEmpty()){
+            return null;
+        }
+        UserEntity user = userOpt.get();
         return new UserLoginResponseDto(user.getEmail(), user.getFirstName(), user.getLastName());
     }
 }

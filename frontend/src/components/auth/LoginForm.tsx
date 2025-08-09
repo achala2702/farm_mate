@@ -42,7 +42,9 @@ export default function LoginForm() {
       router.push("/forum");
     }
   };
-  const handleLoginGoogle = () => {};
+  const handleLoginGoogle = () => {
+    window.location.href = `${process.env.NEXT_PUBLIC_BACKEND_URL}/oauth2/authorization/google`;
+  };
   const handleLoginFacebook = () => {};
 
   return (
@@ -105,6 +107,7 @@ export default function LoginForm() {
 
       <div className="w-full flex gap-4">
         <Button
+          icon="devicon:google"
           text="Google"
           onClick={handleLoginGoogle}
           className="flex-grow text-black font-semibold bg-[#f8fbe7] py-2 px-6 rounded-md border border-gray-300"

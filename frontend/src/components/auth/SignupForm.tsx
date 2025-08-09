@@ -11,7 +11,9 @@ export default function SignupForm() {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
 
-  const handleLoginGoogle = () => {};
+  const handleLoginGoogle = () => {
+    window.location.href = `${process.env.NEXT_PUBLIC_BACKEND_URL}/oauth2/authorization/google`;
+  };
   const handleLoginFacebook = () => {};
 
   useEffect(() => {
@@ -97,6 +99,7 @@ export default function SignupForm() {
 
       <div className="w-full flex gap-4">
         <Button
+          icon="devicon:google"
           text="Google"
           onClick={handleLoginGoogle}
           className="flex-grow text-black font-semibold bg-[#f8fbe7] py-2 px-6 rounded-md border border-gray-300"

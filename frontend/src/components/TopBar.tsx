@@ -5,6 +5,11 @@ import SearchInput from "./SearchInput";
 import { Icon } from "@iconify/react";
 import useScreenWidth from "@/hooks/useScreenWidth";
 import { useTheme } from "next-themes";
+import { useSelector, useDispatch } from "react-redux";
+import type { RootState, AppDispatch } from "@/redux/store";
+import Button from "./button";
+import { useRouter } from "next/navigation";
+import { clearLoginData } from "@/redux/slices/AuthenticationSlice";
 
 type TopBarProps = {
   navbarOpen: boolean;
@@ -14,9 +19,32 @@ type TopBarProps = {
 export default function TopBar({ navbarOpen, setNavbarOpen }: TopBarProps) {
   const screenWidth = useScreenWidth();
   const { theme, setTheme } = useTheme();
+  const user = useSelector((state: RootState) => state.userAuthentication.data);
+  const dispatch: AppDispatch = useDispatch();
+  const router = useRouter();
+
+  const handleClick = async () => {
+    if (user) {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/logout`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+
+      if (res.ok) {
+        dispatch(clearLoginData());
+      } else {
+        alert("Unknown Error occured!");
+      }
+    } else {
+      router.push("/login");
+    }
+  };
 
   return (
-    <div className="flex px-14 items-center w-full justify-between py-2 border-b-1 border-gray-400 bg-background z-10 fixed">
+    <div className="flex pl-14 pr-4 md:px-14 items-center w-full justify-between py-2 border-b-1 border-gray-400 bg-background z-10 fixed">
       <div
         onClick={() => setNavbarOpen(!navbarOpen)}
         className="absolute left-4 xl:hidden flex justify-center items-center transition-opacity duration-300 ease-in-out"
@@ -40,7 +68,7 @@ export default function TopBar({ navbarOpen, setNavbarOpen }: TopBarProps) {
           screenWidth < 640 ? "hidden" : ""
         }`}
       />
-      <div className="flex gap-4">
+      <div className="flex gap-2 md:gap-4">
         <button
           className="cursor-pointer"
           onClick={() => setTheme(theme === "light" ? "dark" : "light")}
@@ -51,8 +79,16 @@ export default function TopBar({ navbarOpen, setNavbarOpen }: TopBarProps) {
             height="24"
           />
         </button>
-        <p>d</p>
-        <p>d</p>
+        {user && (
+          <div className="flex gap-1 items-center">
+            <p>Welcome, {user?.firstName}</p>
+          </div>
+        )}
+        <Button
+          onClick={handleClick}
+          className="bg-primaryGreen px-2 py-1 rounded-md whitespace-nowrap"
+          text={`${user ? "log out" : "log in"}`}
+        />
       </div>
     </div>
   );

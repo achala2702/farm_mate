@@ -26,7 +26,7 @@ export default function PostSection({ post }: PostSectionProps) {
               className="rounded-full w-10 h-10 object-cover"
             />
             <div>
-              <p className="md:text-base text-sm">{post.postAuthor.authorFirstName + post.postAuthor.authorLastName}</p>
+              <p className="md:text-base text-sm">{post.postAuthor.authorFirstName + " " + post.postAuthor.authorLastName}</p>
               <p className="md:text-sm text-xs">{FormatTimesAgo(new Date(post.createdAt))}</p>
             </div>
           </div>

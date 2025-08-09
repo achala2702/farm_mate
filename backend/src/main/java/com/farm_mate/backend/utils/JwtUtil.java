@@ -28,8 +28,7 @@ public class JwtUtil {
     }
 
     //generate jwt
-    public String generateJwt(UserLoginDto userLoginDto) {
-        String email = userLoginDto.getEmail();
+    public String generateJwt(String email) {
         Date currentDate = new Date();
         //after 1h
         Date expirationDate = new Date(currentDate.getTime() + 60 * 60 * 1000);

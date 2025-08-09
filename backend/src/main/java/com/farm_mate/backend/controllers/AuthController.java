@@ -8,10 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -33,5 +30,15 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<UserLoginResponseDto> userLogin(@Valid @RequestBody UserLoginDto userLoginDto, HttpServletResponse response) {
         return ResponseEntity.status(HttpStatus.OK).body(authService.userLoginService(userLoginDto, response));
+    }
+
+    @GetMapping("/logout")
+    public ResponseEntity<String> userLogout(HttpServletResponse response) {
+        return ResponseEntity.status(HttpStatus.OK).body(authService.userLogoutService(response));
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserLoginResponseDto> getUserInfo() {
+        return ResponseEntity.status(HttpStatus.OK).body(authService.getUserInfoService());
     }
 }
