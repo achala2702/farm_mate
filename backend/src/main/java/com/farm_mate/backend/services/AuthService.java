@@ -53,7 +53,7 @@ public class AuthService {
         //generating a token if user found in db
         String token = jwtUtil.generateJwt(userLoginDto.getEmail());
 
-        //creating a http only cookie
+        //creating an http only cookie
         ResponseCookie cookie = ResponseCookie.from("jwt", token)
                 .httpOnly(true)
                 .secure(false)
@@ -67,5 +67,16 @@ public class AuthService {
 
         //returning user response with all details
         return new UserLoginResponseDto(user.getEmail(), user.getFirstName(), user.getLastName());
+    }
+
+    public String userLogoutService(HttpServletResponse response) {
+        response.addHeader(HttpHeaders.SET_COOKIE, ResponseCookie.from("jwt", "")
+                        .httpOnly(true)
+                        .secure(false)
+                        .path("/")
+                        .maxAge(0)
+                .build().toString()
+        );
+        return "User Log out successfully!";
     }
 }

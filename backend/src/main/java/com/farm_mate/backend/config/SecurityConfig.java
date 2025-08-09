@@ -3,8 +3,6 @@ package com.farm_mate.backend.config;
 import com.farm_mate.backend.entities.UserEntity;
 import com.farm_mate.backend.repositories.UserRepository;
 import com.farm_mate.backend.utils.JwtUtil;
-import jakarta.servlet.http.Cookie;
-import org.apache.catalina.User;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
