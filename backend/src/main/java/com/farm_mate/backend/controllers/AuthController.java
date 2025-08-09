@@ -36,4 +36,9 @@ public class AuthController {
     public ResponseEntity<String> userLogout(HttpServletResponse response) {
         return ResponseEntity.status(HttpStatus.OK).body(authService.userLogoutService(response));
     }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserLoginResponseDto> getUserInfo() {
+        return ResponseEntity.status(HttpStatus.OK).body(authService.getUserInfoService());
+    }
 }

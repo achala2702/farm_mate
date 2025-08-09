@@ -7,6 +7,7 @@ import com.farm_mate.backend.entities.UserEntity;
 import com.farm_mate.backend.exceptions.UserAlreadyExistsException;
 import com.farm_mate.backend.exceptions.UserNotFoundException;
 import com.farm_mate.backend.repositories.UserRepository;
+import com.farm_mate.backend.utils.CurrentUserProvider;
 import com.farm_mate.backend.utils.JwtUtil;
 import com.farm_mate.backend.utils.UserMapper;
 import jakarta.servlet.http.HttpServletResponse;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.util.Optional;
 
 @Service
 public class AuthService {
@@ -78,5 +80,15 @@ public class AuthService {
                 .build().toString()
         );
         return "User Log out successfully!";
+    }
+
+    public UserLoginResponseDto getUserInfoService() {
+        String email = CurrentUserProvider.getCurrentUsersEmail();
+        Optional<UserEntity> userOpt = userRepository.findByEmail(email);
+        if (userOpt.isEmpty()){
+            return null;
+        }
+        UserEntity user = userOpt.get();
+        return new UserLoginResponseDto(user.getEmail(), user.getFirstName(), user.getLastName());
     }
 }
