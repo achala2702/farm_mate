@@ -45,7 +45,9 @@ export default function LoginForm() {
   const handleLoginGoogle = () => {
     window.location.href = `${process.env.NEXT_PUBLIC_BACKEND_URL}/oauth2/authorization/google`;
   };
-  const handleLoginFacebook = () => {};
+  const handleLoginFacebook = () => {
+    window.location.href = `${process.env.NEXT_PUBLIC_BACKEND_URL}/oauth2/authorization/facebook`;
+  };
 
   return (
     <div className="flex flex-col justify-center items-center rounded-lg p-6 gap-6 text-gray-500 bg-white border-1 border-amber-200">
@@ -113,6 +115,7 @@ export default function LoginForm() {
           className="flex-grow text-black font-semibold bg-[#f8fbe7] py-2 px-6 rounded-md border border-gray-300"
         />
         <Button
+          icon="logos:facebook"
           text="Facebook"
           onClick={handleLoginFacebook}
           className=" flex-grow text-black font-semibold bg-[#f8fbe7] py-2 px-6 rounded-md border border-gray-300"

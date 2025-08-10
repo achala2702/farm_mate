@@ -14,7 +14,9 @@ export default function SignupForm() {
   const handleLoginGoogle = () => {
     window.location.href = `${process.env.NEXT_PUBLIC_BACKEND_URL}/oauth2/authorization/google`;
   };
-  const handleLoginFacebook = () => {};
+  const handleLoginFacebook = () => {
+    window.location.href = `${process.env.NEXT_PUBLIC_BACKEND_URL}/oauth2/authorization/facebook`;
+  };
 
   useEffect(() => {
     if (state?.success) {
@@ -106,6 +108,7 @@ export default function SignupForm() {
         />
         <Button
           text="Facebook"
+          icon="logos:facebook"
           onClick={handleLoginFacebook}
           className=" flex-grow text-black font-semibold bg-[#f8fbe7] py-2 px-6 rounded-md border border-gray-300"
         />

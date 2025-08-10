@@ -2,7 +2,7 @@
 
 import { Icon } from "@iconify/react";
 import Button from "../button";
-import type {TPost} from "@/api/GetPosts";
+import type { TPost } from "@/api/GetPosts";
 import FormatTimesAgo from "@/utils/FormateTimesAgo";
 
 type PostSectionProps = {
@@ -10,6 +10,9 @@ type PostSectionProps = {
 };
 
 export default function PostSection({ post }: PostSectionProps) {
+
+  console.log(post.imageUrl)
+
   return (
     <section className="w-full bg-custom-card-bg rounded-2xl p-10">
       <div className="flex flex-col gap-4 md:gap-6 w-full">
@@ -26,16 +29,24 @@ export default function PostSection({ post }: PostSectionProps) {
               className="rounded-full w-10 h-10 object-cover"
             />
             <div>
-              <p className="md:text-base text-sm">{post.postAuthor.authorFirstName + " " + post.postAuthor.authorLastName}</p>
-              <p className="md:text-sm text-xs">{FormatTimesAgo(new Date(post.createdAt))}</p>
+              <p className="md:text-base text-sm">
+                {post.postAuthor.authorFirstName +
+                  " " +
+                  post.postAuthor.authorLastName}
+              </p>
+              <p className="md:text-sm text-xs">
+                {FormatTimesAgo(new Date(post.createdAt))}
+              </p>
             </div>
           </div>
           <p className="text-sm md:text-base">{post.content}</p>
-          <img
-            src={post.imageUrl}
-            alt="post-img"
-            className="object-cover rounded-2xl w-4/5 mx-auto my-2"
-          />
+          {post.imageUrl && (
+            <img
+              src={post.imageUrl}
+              alt="post-img"
+              className="object-cover rounded-2xl w-4/5 mx-auto my-2"
+            />
+          )}
         </div>
         <div className=" flex items-center justify-between">
           <div className=" flex gap-2 items-center justify-center">

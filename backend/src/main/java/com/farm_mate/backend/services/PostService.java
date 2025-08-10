@@ -48,7 +48,7 @@ public class PostService {
         String currentUserEmail = CurrentUserProvider.getCurrentUsersEmail();
         String imageUrl = null;
 
-        if(postDto.getImage() != null){
+        if(postDto.getImage() != null && !postDto.getImage().isEmpty()){
             MultipartFile image = postDto.getImage();
             String uploadDir = "uploads/images";
 
